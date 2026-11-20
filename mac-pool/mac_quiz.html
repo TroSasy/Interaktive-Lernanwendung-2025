@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>E-Learning · Quiz</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&family=Roboto:wght@400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root { --space-cadet:#3b305c; --tropical-indigo:#aca0f2; --antiflash-white:#F0F0F0; --text-dark:#0C0D25; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Roboto',sans-serif;background:var(--tropical-indigo);color:var(--text-dark);line-height:1.5;padding:20px}
+    a{color:var(--space-cadet);text-decoration:none;transition:.3s}
+    a:hover{color:var(--tropical-indigo)}
+    #back-button{display:inline-block;margin-bottom:20px;padding:6px 14px;border:2px solid var(--space-cadet);border-radius:6px;font-weight:600;font-size:1.1rem;background:var(--antiflash-white);transition:.3s;color:var(--space-cadet)}
+    #back-button:hover{background:var(--space-cadet);color:var(--antiflash-white)}
+    .header{text-align:center;margin-bottom:30px;font-family:'Josefin Sans',sans-serif}
+    .header h1{color:var(--space-cadet);font-size:2.6rem;margin-bottom:10px}
+    .header p{max-width:700px;margin:0 auto;font-size:1.1rem;color:var(--text-dark)}
+    .navbar{background:var(--antiflash-white);padding:12px 20px;margin-bottom:30px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.08);text-align:center;max-width:fit-content;margin:2rem auto}
+    .navbar ul{list-style:none}.navbar li{display:inline-block;margin:0 12px}.navbar a{font-weight:600;font-size:1.1rem;color:var(--space-cadet)}
+    .lektionen-container{display:flex;flex-wrap:wrap;gap:28px;justify-content:center;max-width:1200px;margin:0 auto 60px}
+    .lektion{background:var(--antiflash-white);border-radius:12px;box-shadow:0 6px 16px rgba(0,0,0,.1);width:320px;display:flex;flex-direction:column;transition:.3s;padding:20px}
+    .lektion:hover{transform:translateY(-6px);box-shadow:0 10px 24px rgba(0,0,0,.15)}
+    .lektion .options{margin-top:15px}
+    .options label{display:block;margin-bottom:10px;font-size:1rem;cursor:pointer;padding:8px 10px;border:1px solid #ddd;border-radius:6px;transition:.25s;background:var(--antiflash-white)}
+    .options input{margin-right:8px}
+    .options label:hover{background:#eaeaea}
+    .correct{background:#d4edda;border-color:#28a745;color:#155724}
+    .wrong{background:#f8d7da;border-color:#dc3545;color:#721c24}
+
+    @media(max-width:900px){.lektion{width:45%}}
+    @media(max-width:600px){.lektion{width:100%}}
+  </style>
+</head>
+<body>
+
+  <a id="back-button" href="mac_pool_index.html">⟵ Zurück</a>
+
+  <header class="header">
+    <h1>Quiz</h1>
+    <p>Sicherheitsunterweisung Mac-Pool</p>
+  </header>
+
+  <nav class="navbar">
+    <ul><li><a href="#frage1">Zurück zur Übersicht</a></li></ul>
+  </nav>
+
+  <main class="lektionen-container">
+
+    <!-- Frage 1 -->
+    <section class="lektion" id="frage1">
+      <div class="text"><h2>Wofür ist der weiße leuchtende Not-Aus-Knopf in den PC-Pools gedacht?</h2></div>
+      <div class="options">
+        <label><input type="radio" name="q1" value="a"><span>Um alle PCs nach dem Unterricht schnell herunterzufahren</span></label>
+        <label><input type="radio" name="q1" value="b"><span>Um einzelne Monitore auszuschalten</span></label>
+        <label><input type="radio" name="q1" value="c" data-right="true"><span>Um die gesamte PC-Reihe bei Gefahr stromlos zu machen</span></label>
+        <label><input type="radio" name="q1" value="d"><span>Um das Licht im Raum auszuschalten</span></label>
+      </div>
+    </section>
+
+    <!-- Frage 2 -->
+    <section class="lektion" id="frage2">
+      <div class="text"><h2>Wann darf der rote Not-Aus-Knopf betätigt werden?</h2></div>
+      <div class="options">
+        <label><input type="radio" name="q2" value="a"><span>Bei Unterrichtsende</span></label>
+        <label><input type="radio" name="q2" value="b"><span>Wenn ein USB-Stick nicht erkannt wird</span></label>
+        <label><input type="radio" name="q2" value="c" data-right="true"><span>Bei akuter Gefahr wie Rauch oder Stromschlag</span></label>
+        <label><input type="radio" name="q2" value="d"><span>Zum schnellen Neustart der Geräte</span></label>
+      </div>
+    </section>
+
+    <!-- Frage 3 -->
+    <section class="lektion" id="frage3">
+      <div class="text"><h2>Welche Aussage trifft auf die Medientechnik in den PC-Pools zu?</h2></div>
+      <div class="options">
+        <label><input type="radio" name="q3" value="a"><span>Sie besteht nur aus Lautsprechern und Tastaturen</span></label>
+        <label><input type="radio" name="q3" value="b"><span>Es gibt keine Projektionsmöglichkeit</span></label>
+        <label><input type="radio" name="q3" value="c" data-right="true"><span>Beamer, Audio-Systeme und farbkalibrierte Monitore sind vorhanden</span></label>
+        <label><input type="radio" name="q3" value="d"><span>Nur mobile Geräte dürfen verwendet werden</span></label>
+      </div>
+    </section>
+
+    <!-- Frage 4 -->
+    <section class="lektion" id="frage4">
+      <div class="text"><h2>Wie lassen sich Signalquellen, Ton und Bild in den Pools zentral steuern?</h2></div>
+      <div class="options">
+        <label><input type="radio" name="q4" value="a"><span>Über eine Fernbedienung pro Arbeitsplatz</span></label>
+        <label><input type="radio" name="q4" value="b"><span>Nur über den Hauptserver</span></label>
+        <label><input type="radio" name="q4" value="c" data-right="true"><span>Mit einem kleinen Touchscreen-Bedienfeld</span></label>
+        <label><input type="radio" name="q4" value="d"><span>Über Tastenkombinationen am Beamer</span></label>
+      </div>
+    </section>
+
+    <!-- Frage 5 -->
+    <section class="lektion" id="frage5">
+      <div class="text"><h2>Was ist der Vorteil der LED-Deckenbeleuchtung in den PC-Pools?</h2></div>
+      <div class="options">
+        <label><input type="radio" name="q5" value="a"><span>Sie blinkt bei Präsentationen</span></label>
+        <label><input type="radio" name="q5" value="b" data-right="true"><span>Sie lässt sich dimmen und blendet nicht</span></label>
+        <label><input type="radio" name="q5" value="c"><span>Sie schaltet sich nach 10 Minuten automatisch aus</span></label>
+        <label><input type="radio" name="q5" value="d"><span>Sie simuliert Tageslichtfarben in Regenbogenfarben</span></label>
+      </div>
+    </section>
+
+    <!-- Frage 6 -->
+    <section class="lektion" id="frage6">
+      <div class="text"><h2>Was ist beim Arbeiten an den PCs im Pool bezüglich der Daten wichtig?</h2></div>
+      <div class="options">
+        <label><input type="radio" name="q6" value="a"><span>Daten werden automatisch auf dem Desktop gespeichert</span></label>
+        <label><input type="radio" name="q6" value="b" data-right="true"><span>Eigene Daten nur extern oder in der Cloud speichern</span></label>
+        <label><input type="radio" name="q6" value="c"><span>Daten auf dem Rechner können nicht gelöscht werden</span></label>
+        <label><input type="radio" name="q6" value="d"><span>Der Download von Dateien ist verboten</span></label>
+      </div>
+    </section>
+
+    <!-- Frage 7 -->
+    <section class="lektion" id="frage7">
+      <div class="text"><h2>Worauf sollte beim Verlassen des PC-Pools geachtet werden?</h2></div>
+      <div class="options">
+        <label><input type="radio" name="q7" value="a"><span>PCs laufen weiter, um Updates zu installieren</span></label>
+        <label><input type="radio" name="q7" value="b"><span>Bildschirme bleiben an für den nächsten Nutzer</span></label>
+        <label><input type="radio" name="q7" value="c" data-right="true"><span>Arbeitsplatz aufräumen, herunterfahren, abmelden</span></label>
+        <label><input type="radio" name="q7" value="d"><span>Einfach rausgehen – wird automatisch erledigt</span></label>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Interaktiv-Feedback -->
+  <script>
+    document.querySelectorAll('.options input').forEach(inp=>{
+      inp.addEventListener('change', e=>{
+        const wrapper = e.target.closest('.options');
+        // alte Zustände löschen
+        wrapper.querySelectorAll('label').forEach(l=>l.classList.remove('correct','wrong'));
+        // neues Feedback setzen
+        const lbl = e.target.parentElement;
+        if (e.target.dataset.right !== undefined){
+          lbl.classList.add('correct');
+        }else{
+          lbl.classList.add('wrong');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

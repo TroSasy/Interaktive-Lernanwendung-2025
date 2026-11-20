@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+  <title>Tonstudio-Quiz</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&family=Roboto:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --space-cadet: #3b305c;
+      --tropical-indigo: #aca0f2;
+      --antiflash-white: #F0F0F0;
+      --text-dark: #0C0D25;
+      --correct-bg: #d4edda;
+      --wrong-bg: #f8d7da;
+      --correct-border: #28a745;
+      --wrong-border: #dc3545;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--tropical-indigo);
+      color: var(--text-dark);
+      padding: 20px;
+      line-height: 1.5;
+    }
+    a { color: var(--space-cadet); text-decoration: none; transition: .3s; }
+    a:hover { color: var(--tropical-indigo); }
+    #back-button {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 6px 14px;
+      border: 2px solid var(--space-cadet);
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      background: var(--antiflash-white);
+      color: var(--space-cadet);
+      transition: .3s;
+    }
+    #back-button:hover {
+      background: var(--space-cadet);
+      color: var(--antiflash-white);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      font-family: 'Josefin Sans', sans-serif;
+    }
+    .header h1 {
+      color: var(--space-cadet);
+      font-size: 2.6rem;
+      margin-bottom: 10px;
+    }
+    .header p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .navbar {
+      background: var(--antiflash-white);
+      padding: 12px 20px;
+      margin: 2rem auto 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+      text-align: center;
+      max-width: fit-content;
+    }
+    .navbar ul { list-style: none; }
+    .navbar li { display: inline-block; margin: 0 12px; }
+    .navbar a { font-weight: 600; font-size: 1.1rem; }
+    .lektionen-container {
+      display: flex; flex-wrap: wrap; gap: 28px;
+      justify-content: center; max-width: 1200px;
+      margin: 0 auto 60px;
+    }
+    .lektion {
+      background: var(--antiflash-white);
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,.1);
+      width: 320px;
+      padding: 20px;
+      transition: .3s;
+    }
+    .lektion:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 24px rgba(0,0,0,.15);
+    }
+    .lektion .options { margin-top: 15px; }
+    .options label {
+      display: block; margin-bottom: 10px;
+      padding: 8px 10px; border: 1px solid #ddd;
+      border-radius: 6px; cursor: pointer;
+      transition: .25s; background: var(--antiflash-white);
+    }
+    .options input { margin-right: 8px; }
+    .options label:hover { background: #eaeaea; }
+    .correct {
+      background: var(--correct-bg) !important;
+      border-color: var(--correct-border) !important;
+    }
+    .wrong {
+      background: var(--wrong-bg) !important;
+      border-color: var(--wrong-border) !important;
+    }
+    @media (max-width: 900px) { .lektion { width: 45%; } }
+    @media (max-width: 600px) { .lektion { width: 100%; } }
+  </style>
+</head>
+<body>
+
+  <a id="back-button" href="tonstudio_index.html">⟵ Zurück</a>
+
+  <header class="header">
+    <h1>Quiz Tonstudio</h1>
+    <p>Teste dein Wissen zur Tonstudio-Technik</p>
+  </header>
+
+  <nav class="navbar">
+    <ul><li><a href="#frage1">Übersicht</a></li></ul>
+  </nav>
+
+  <main class="lektionen-container">
+
+    <!-- Frage 1 -->
+    <section class="lektion" id="frage1">
+      <div class="text"><h2>1. Was ist beim Mikrofon im Tonstudio besonders wichtig?</h2></div>
+      <div class="options">
+        <label><input type="radio" name="q1" value="a"><span>Es sollte möglichst weit vom Sprecher entfernt sein</span></label>
+        <label><input type="radio" name="q1" value="b"><span>Es darf nur mit Musik benutzt werden</span></label>
+        <label><input type="radio" name="q1" value="c" data-right><span>Der Winkel und Abstand zur Schallquelle müssen stimmen</span></label>
+        <label><input type="radio" name="q1" value="d"><span>Es funktioniert nur mit kabelloser Verbindung</span></label>
+      </div>
+    </section>
+
+    <!-- Frage 2 -->
+    <section class="lektion" id="frage2">
+      <div class="text"><h2>2. Was gehört nicht zu den typischen Störquellen bei Sprachaufnahmen?</h2></div>
+      <div class="options">
+        <label><input type="radio" name="q2" value="a"><span>Schmuck und Kleidung</span></label>
+        <label><input type="radio" name="q2" value="b"><span>Hintergrundgeräusche</span></label>
+        <label><input type="radio" name="q2" value="c" data-right><span>Gleichmäßige Atmung</span></label>
+        <label><input type="radio" name="q2" value="d"><span>Stühle oder raschelndes Papier</span></label>
+      </div>
+    </section>
+
+    <!-- Frage 3 -->
+    <section class="lektion" id="frage3">
+      <div class="text"><h2>3. Warum ist die richtige Position der Abhörmonitore im Studio wichtig?</h2></div>
+      <div class="options">
+        <label><input type="radio" name="q3" value="a"><span>Damit sie gut aussehen</span></label>
+        <label><input type="radio" name="q3" value="b"><span>Um möglichst lauten Bass zu erzeugen</span></label>
+        <label><input type="radio" name="q3" value="c" data-right><span>Damit der Klang neutral und realistisch wiedergegeben wird</span></label>
+        <label><input type="radio" name="q3" value="d"><span>Damit man das Kabel besser erreicht</span></label>
+      </div>
+    </section>
+
+    <!-- Frage 4 -->
+    <section class="lektion" id="frage4">
+      <div class="text"><h2>4. Was ist beim Aussteuern eines Mikrofonsignals zu beachten?</h2></div>
+      <div class="options">
+        <label><input type="radio" name="q4" value="a"><span>Der Pegel sollte dauerhaft im roten Bereich liegen</span></label>
+        <label><input type="radio" name="q4" value="b"><span>Ein möglichst lauter Signalpegel ist immer besser</span></label>
+        <label><input type="radio" name="q4" value="c" data-right><span>Der Pegel sollte zwischen -6 dB und -12 dB liegen</span></label>
+        <label><input type="radio" name="q4" value="d"><span>Das Mikrofon muss währenddessen ausgeschaltet sein</span></label>
+      </div>
+    </section>
+
+    <!-- Frage 5 -->
+    <section class="lektion" id="frage5">
+      <div class="text"><h2>5. Wozu dient die Sprecherkabine im Tonstudio?</h2></div>
+      <div class="options">
+        <label><input type="radio" name="q5" value="a"><span>Zum Speichern von Equipment</span></label>
+        <label><input type="radio" name="q5" value="b"><span>Für Geräuschaufnahmen von Maschinen</span></label>
+        <label><input type="radio" name="q5" value="c" data-right><span>Für isolierte und saubere Sprachaufnahmen</span></label>
+        <label><input type="radio" name="q5" value="d"><span>Als Pausenraum zwischen den Takes</span></label>
+      </div>
+    </section>
+
+    <!-- Frage 6 -->
+    <section class="lektion" id="frage6">
+      <div class="text"><h2>6. Was ist wichtig, um unerwünschte Raumreflexionen zu minimieren?</h2></div>
+      <div class="options">
+        <label><input type="radio" name="q6" value="a"><span>Lautstärke der Musik erhöhen</span></label>
+        <label><input type="radio" name="q6" value="b" data-right><span>Verwendung von akustischen Absorbern oder Schaumstoffplatten</span></label>
+        <label><input type="radio" name="q6" value="c"><span>Mikrofon direkt auf die Wand richten</span></label>
+        <label><input type="radio" name="q6" value="d"><span>Raumtemperatur erhöhen</span></label>
+      </div>
+    </section>
+
+    <!-- Frage 7 -->
+    <section class="lektion" id="frage7">
+      <div class="text"><h2>7. Was ist beim Umgang mit der DAW besonders wichtig?</h2></div>
+      <div class="options">
+        <label><input type="radio" name="q7" value="a"><span>Nur mit der Maus arbeiten, keine Tastatur verwenden</span></label>
+        <label><input type="radio" name="q7" value="b" data-right><span>Spuren klar benennen und Signalfluss kontrollieren</span></label>
+        <label><input type="radio" name="q7" value="c"><span>Effekte vor der Aufnahme aktivieren</span></label>
+        <label><input type="radio" name="q7" value="d"><span>Alle Spuren gleich laut einstellen</span></label>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // On change, mark correct/wrong
+    document.querySelectorAll('.options input').forEach(input => {
+      input.addEventListener('change', e => {
+        const opts = e.target.closest('.options');
+        // reset all
+        opts.querySelectorAll('label').forEach(l => {
+          l.classList.remove('correct','wrong');
+        });
+        // mark selected
+        const label = e.target.closest('label');
+        if (e.target.hasAttribute('data-right')) {
+          label.classList.add('correct');
+        } else {
+          label.classList.add('wrong');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notruf</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    #sortable {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      width: 300px;
+    }
+    #sortable li {
+      margin: 5px 0;
+      padding: 10px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      cursor: move;
+    }
+    button {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+<h1>Ordne die W-Fragen bei einer Rettung nach richtiger Reihenfolge</h1>
+<ul id="sortable"></ul>
+<button onclick="checkOrder()">Überprüfen</button>
+<p id="result"></p>
+
+<script>
+  // Beispiel-Daten (beliebig erweiterbar)
+  const items = [
+    { order: 3, text: "3. Wer ist beteiligt?" },
+    { order: 1, text: "1. Was ist passiert?" },
+    { order: 2, text: "2. Wo genau sind Sie?" },
+    { order: 5, text: "5. Warum ist die Situation gefährlich?" },
+    { order: 4, text: "4. Wann ist es passiert?" },
+    { order: 6, text: "6. Wie viele Verletzte gibt es?" },
+  ];
+
+  // Mische die Elemente zufällig
+  function shuffle(array) {
+    return array.sort(() => Math.random() - 0.5);
+  }
+
+  function renderItems() {
+    const shuffled = shuffle([...items]);
+    const list = document.getElementById("sortable");
+    list.innerHTML = "";
+    shuffled.forEach((item, index) => {
+      const li = document.createElement("li");
+      li.textContent = item.text;
+      li.dataset.order = item.order;
+      li.draggable = true;
+      li.addEventListener("dragstart", handleDragStart);
+      li.addEventListener("dragover", handleDragOver);
+      li.addEventListener("drop", handleDrop);
+      list.appendChild(li);
+    });
+  }
+
+  let draggedItem = null;
+
+  function handleDragStart(e) {
+    draggedItem = this;
+  }
+
+  function handleDragOver(e) {
+    e.preventDefault();
+    const list = this.parentNode;
+    const draggedIndex = Array.from(list.children).indexOf(draggedItem);
+    const targetIndex = Array.from(list.children).indexOf(this);
+    if (draggedIndex < targetIndex) {
+      list.insertBefore(draggedItem, this.nextSibling);
+    } else {
+      list.insertBefore(draggedItem, this);
+    }
+  }
+
+  function handleDrop(e) {
+    e.preventDefault();
+  }
+
+  function checkOrder() {
+    const listItems = document.querySelectorAll("#sortable li");
+    const currentOrder = Array.from(listItems).map(li => parseInt(li.dataset.order));
+    const sorted = [...currentOrder].sort((a, b) => a - b);
+    const isCorrect = currentOrder.every((val, idx) => val === sorted[idx]);
+    document.getElementById("result").textContent = isCorrect
+            ? "Richtige Reihenfolge!"
+            : "Falsche Reihenfolge. Versuche es nochmal.";
+  }
+
+  renderItems();
+</script>
+</body>
+</html>

@@ -1,0 +1,362 @@
+@media screen and (max-width: 2048px) {
+    html, body {
+        /* transform: scale(0.8); */
+        transform-origin: top left;
+        overflow: auto;
+    }
+}
+@media screen and (min-width: 820px) and (max-width: 1024px) and (orientation: portrait) {
+    html, body {
+        font-size: 16px;
+    }
+
+    #back-button {
+        font-size: 1rem;
+        top: 1rem;
+        left: 1rem;
+        padding: 0.5rem 1rem;
+    }
+
+    #progress-container {
+        width: 80%;
+        top: 1rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    html, body {
+        font-size: 18px;
+    }
+}
+:root {
+    /* Farben */
+    --space-cadet: #3b305c;
+    --tropical-indigo: #aca0f2;
+    --antiflash-white: #F0F0F0;
+    --text-dark: #0C0D25;
+
+    /* Grid und Abstände (8px Softgrid) */
+    --grid-unit: 8px;
+    --margin-horizontal: 144px;
+    --margin-vertical: 160px;
+    --nav-margin-right: calc(var(--grid-unit) * 8); /* 64px */
+
+    /* Schriftgrößen */
+    --fs-xl: 96px;  /* bleibt gleich */
+    --fs-l: 80px;   /* vorher 64px */
+    --fs-m: 64px;   /* vorher 48px */
+    --fs-s: 48px;   /* vorher 40px */
+    --fs-xs: 40px;  /* vorher 32px */
+
+    /* Rundungen */
+    --border-radius: 28px;
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto; /*erlaubt normales Scrollverhalten */
+    /*overflow: hidden;*/
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--space-cadet); /* zur visuellen Kontrolle, kannst du ändern */
+}
+
+/* Navbar Styling (seitlich, vertikal) */
+.navbar {
+    position: fixed;
+    top: var(--margin-vertical);
+    left: var(--margin-horizontal);
+    width: 320px;
+    height: calc(100% - 2 * var(--margin-vertical));
+    background-color: var(--tropical-indigo);
+    border-radius: var(--border-radius);
+    padding: calc(var(--grid-unit) * 4);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.navbar li a.back-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: #3B305C;
+    color: white !important;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+
+.navbar li a.back-button:hover {
+    background-color: #2e2447;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.navbar li a.back-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+.navbar li:last-child {
+    margin-top: auto;
+}
+
+
+
+.logo {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: var(--fs-m);
+    margin-bottom: calc(var(--grid-unit) * 8);
+    color: var(--space-cadet);
+}
+
+.navbar ul {
+    list-style: none;
+}
+
+.navbar ul li {
+    margin-bottom: calc(var(--grid-unit) * 4);
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    font-size: var(--fs-xs);
+    color: var(--space-cadet);
+}
+
+.navbar ul li a:hover {
+    color: var(--antiflash-white);
+}
+
+
+
+/* Lektionen Container */
+.lektionen-container {
+    position: absolute;
+    top: calc(var(--margin-vertical) + 230px); /* Platz unter Header */
+    left: calc(var(--margin-horizontal) + 320px + var(--nav-margin-right));
+    right: var(--margin-horizontal);
+    bottom: 1rem; /* <<< DAS ist der Trick */
+
+    overflow-y: auto;
+    padding-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--grid-unit) * 4);
+
+}
+
+/* Lektionen */
+.lektion {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /*align-items: flex-start;*/
+    background-color: var(--antiflash-white);
+    border-radius: var(--border-radius);
+    padding: 32px 0; /* 64px vertikal verteilt */
+    overflow: visible   ;
+    text-decoration: none;
+    color: inherit;
+
+}
+
+/* Linker Textbereich */
+.lektion .text {
+    width: 50%;
+    padding: 0 calc(var(--grid-unit) * 4); /* Nur horizontal Padding */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.lektion .bild {
+    width: 50%;
+    padding: 0 calc(var(--grid-unit) * 4);
+    display: flex;
+    align-items: stretch; /* wichtig, damit Bild sich mitzieht */
+    justify-content: center;
+}
+
+.lektion .bild img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* optional: 'contain' wenn du kein Zuschneiden willst */
+    border-radius: var(--border-radius);
+}
+.lektion .text,
+.lektion .bild {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+
+.lektion h2 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: var(--fs-s);
+    color: var(--space-cadet);
+    margin-bottom: calc(var(--grid-unit) * 2);
+}
+
+.lektion p {
+    font-size: var(--fs-xs);
+    color: var(--text-dark);
+}
+
+/* Hase Platzhalter (im Vordergrund) */
+.hase-placeholder {
+    position: fixed;
+    top: calc(var(--margin-vertical) + 32px); /* leicht unterhalb vom oberen Rand */
+    right: var(--margin-horizontal);
+    width: 128px;
+    height: 128px;
+    background-color: var(--antiflash-white);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 3000; /* über Header und Lektionen */
+}
+
+/* Header-Bereich */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--space-cadet);
+    color: var(--antiflash-white);
+    padding: calc(var(--grid-unit) * 2) var(--margin-horizontal);
+    z-index: 2000;
+}
+
+.header h1 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: var(--fs-xl);
+    margin-bottom: calc(var(--grid-unit) * 2);
+}
+
+.header p {
+    font-size: var(--fs-xs);
+    max-width: 90%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+/* Anpassen der Navbar-Position */ /* <-- Das ist der vertikale Abstand */
+.navbar {
+    top: calc(var(--margin-vertical) + 230px);/* <-- Das ist der vertikale Abstand */
+}
+
+/* Styling für das 2D-Overlay-Fenster */
+#info-window {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 32px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 80%;
+    height: 80%;
+    overflow: auto;
+    text-align: center;
+}
+#info-window button {
+    margin-top: 32px;
+    padding: 16px 32px;
+    cursor: pointer;
+}
+
+#back-button {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #3B305C;
+    color: white;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    z-index: 10001;
+    pointer-events: auto;
+}
+
+
+
+
+.fortschritt-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    overflow: hidden;
+}
+
+.fortschritt-balken {
+    height: 100%;
+    width: 0%;
+    background-color: #4caf50;
+    transition: width 0.5s ease-in-out;
+}
+/* A-Frame */
+a-scene {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    display: block;
+    z-index: 1;
+}
+.back-button {
+    position: absolute;
+    padding: 0.75rem 1.5rem;
+    background-color: #3B305C;
+    color: white;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+}

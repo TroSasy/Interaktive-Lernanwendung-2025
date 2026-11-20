@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sicherheitsunterweisung: C-Lab</title>
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      font-family: 'Roboto', sans-serif;
+      background-color: black;
+    }
+
+    a-scene, canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+    }
+
+    .back-button {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      padding: 0.75rem 1.5rem;
+      background-color: #3B305C;
+      color: white;
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: bold;
+      text-decoration: none;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      z-index: 9999;
+    }
+
+    #progress-container {
+      position: fixed;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 20px;
+      background-color: #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+      z-index: 9998;
+    }
+
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background-color: #4caf50;
+      border-radius: 10px 0 0 10px;
+      transition: width 0.4s ease;
+    }
+
+    #info-window {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      height: 75%;
+      background: rgba(255, 255, 255, 0.95);
+      display: none;
+      flex-direction: column;
+      z-index: 1000;
+    }
+
+    #info-frame {
+      width: 100%;
+      height: 90%;
+      border: none;
+    }
+
+    #overlay-controls {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+    }
+
+    #overlay-controls button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body data-lesson="clab">
+
+<!-- Zurück-Button -->
+<a href="../index.php" class="back-button">← Zurück</a>
+
+
+<!-- Fortschrittsbalken -->
+<div id="progress-container">
+  <div id="progress-bar"></div>
+</div>
+
+<a-scene>
+  <a-sky src="../Bilder/360/W0_C-Lab-1.jpg" rotation="0 -270 0"></a-sky>
+
+  <!-- POIs -->
+  <a-entity position="-3 1.5 -1" geometry="primitive: sphere; radius: 0.2" material="color: red" open-window data-id="feuermelder"></a-entity>
+  <a-entity position="3 0 -1.5" geometry="primitive: sphere; radius: 0.2" material="color: red" open-window data-id="arbeitsplatz"></a-entity>
+  <a-entity position="-3 1 3" geometry="primitive: sphere; radius: 0.2" material="color: red" open-window data-id="drucker"></a-entity>
+  <a-entity position="3 0 2.6" geometry="primitive: sphere; radius: 0.2" material="color: red" open-window data-id="schneidegeraet"></a-entity>
+  <a-entity position="-2 1 -1.5" geometry="primitive: sphere; radius: 0.2" material="color: red" open-window data-id="elektronik"></a-entity>
+
+  <a-camera wasd-controls-enabled="false" look-controls drag-rotate cursor="rayOrigin: mouse" raycaster="objects: [open-window]"></a-camera>
+</a-scene>
+
+<!-- Overlay -->
+<div id="info-window">
+  <iframe id="info-frame"></iframe>
+  <div id="overlay-controls">
+    <button id="prev-slide">Zurück</button>
+    <button id="next-slide">Weiter</button>
+    <button onclick="closeOverlay()">Schließen</button>
+  </div>
+</div>
+
+<!-- Pop-up bei 100% Fortschritt -->
+<div id="completion-popup" style="
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  z-index: 10001;
+  max-width: 90%;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  pointer-events: auto;
+">
+  <h2>🎉 Super!</h2>
+  <p>100% sind in der Lektion <strong>C‑Lab</strong> geschafft.<br>Wenn Sie möchten, können Sie nun Ihr Wissen im Quiz testen.</p>
+
+  <a href="clab_quiz.html" style="
+    display: inline-block;
+    margin: 1rem 0.5rem 0 0;
+    padding: 0.5rem 1.2rem;
+    background: #3B305C;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+  ">Zum Quiz</a>
+
+  <button onclick="closeCompletionPopup()" style="
+    display: inline-block;
+    margin: 1rem 0 0;
+    padding: 0.5rem 1.2rem;
+    background: #ccc;
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+  ">Schließen</button>
+</div>
+
+
+
+<script>
+  const poiData = {
+    feuermelder: { links: ["feuerloescher_info1.html", "feuerloescher_info2.html", "feuerloescher_info3.html", "01_clab_feuerloescher_01.html"] },
+    arbeitsplatz: { links: ["clab_arbeitsplatz.html", "01_clab_spiel_arbeitsplatz.html"] },
+    drucker: { links: ["clab_drucker.html"] },
+    schneidegeraet: { links: ["clab_schneidemaschine.html"] },
+    elektronik: { links: ["clab_allgemein.html"] }
+  };
+
+  let currentSlide = 0;
+  let currentLinks = [];
+  let currentPoiId = null;
+
+  AFRAME.registerComponent("open-window", {
+    init: function () {
+      this.el.addEventListener("click", () => {
+        const poiId = this.el.getAttribute("data-id");
+        const data = poiData[poiId];
+        if (!data) return;
+
+        currentPoiId = poiId;
+        currentLinks = data.links;
+        currentSlide = 0;
+        document.getElementById("info-window").style.display = "flex";
+        loadSlide(currentSlide);
+      });
+    }
+  });
+
+  AFRAME.registerComponent("drag-rotate", {
+    init: function () {
+      const camera = this.el.object3D;
+      let isDragging = false;
+      let lastX = 0;
+
+      document.addEventListener("mousedown", e => {
+        isDragging = true;
+        lastX = e.clientX;
+      });
+      document.addEventListener("mouseup", () => isDragging = false);
+      document.addEventListener("mousemove", e => {
+        if (!isDragging) return;
+        const dx = e.clientX - lastX;
+        lastX = e.clientX;
+        camera.rotation.y -= dx * 0.002;
+      });
+    }
+  });
+
+  function loadSlide(index) {
+    const link = currentLinks[index];
+    document.getElementById("info-frame").src = link;
+    markSlideAsViewed(currentPoiId, link);
+    document.getElementById("prev-slide").disabled = index === 0;
+    document.getElementById("next-slide").disabled = index === currentLinks.length - 1;
+  }
+
+  document.getElementById("prev-slide").addEventListener("click", () => {
+    if (currentSlide > 0) {
+      currentSlide--;
+      loadSlide(currentSlide);
+    }
+  });
+
+  document.getElementById("next-slide").addEventListener("click", () => {
+    if (currentSlide < currentLinks.length - 1) {
+      currentSlide++;
+      loadSlide(currentSlide);
+    }
+  });
+
+  function closeOverlay() {
+    document.getElementById("info-window").style.display = "none";
+    document.getElementById("info-frame").src = "about:blank";
+  }
+</script>
+<script src="../js/progress.js"></script>
+</body>
+</html>

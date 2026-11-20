@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Roter Not-Aus-Knopf</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background-color: #fff;
+        color: black;
+        line-height: 1.6;
+      }
+
+      h2 {
+        color: #b22222;
+        font-size: 2rem;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column; /* Text oben, Bilder unten */
+        gap: 40px;
+        align-items: flex-start;
+      }
+
+      .text {
+        width: 100%;
+        min-width: 300px;
+      }
+
+      .images {
+        width: 100%;
+        display: flex;
+        gap: 20px;
+        justify-content: flex-start; /* Bilder linksbündig nebeneinander */
+        flex-wrap: wrap; /* falls zu eng, Umbruch */
+      }
+
+      .images img {
+        height: 468px; /* 25% größer als 375px */
+        width: auto;
+        object-fit: contain;
+        display: block;
+      }
+
+      p {
+        text-align: left;
+        font-size: 1.5rem;
+        margin: 1.5em 0;
+      }
+
+      @media (max-width: 1000px) {
+        .images img {
+          height: 320px; /* kleinere Höhe auf kleineren Bildschirmen */
+        }
+      }
+
+      @media (max-width: 600px) {
+        .images {
+          flex-direction: column; /* untereinander bei ganz kleinen Displays */
+        }
+        .images img {
+          height: auto;
+          max-width: 100%;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Roter Not-Aus-Knopf</h2>
+
+    <div class="container">
+      <div class="text">
+        <p>
+          Im PC-/Mac-Pool des befindet sich neben der Eingangstür ein roter Not-Aus-Knopf, mit dem die gesamte Stromversorgung des Raumes sofort unterbrochen werden kann. Dieser Schalter ist deutlich sichtbar angebracht und als Notfall-Einrichtung gekennzeichnet.<br><br>
+          Wann darf er benutzt werden? Der rote Not-Aus-Knopf ist ausschließlich in akuten Gefahrensituationen zu verwenden, zum Beispiel: <br><br>
+          bei Brand, Rauchentwicklung oder Stromschlag-Gefahr,<br><br>
+          bei einem technischen Defekt, der sich rasch ausbreitet,<br><br>
+          wenn eine akute Gefahr für Personen oder Geräte besteht.<br><br>
+          Das Betätigen dieses Schalters schaltet alle Geräte und Steckdosen im Raum sofort stromlos. Dies kann zu Datenverlust und Systemfehlern führen – deshalb ist der Einsatz nur im echten Notfall gerechtfertigt.
+        </p>
+        
+      </div>
+
+      <div class="images">
+        <img
+          src="/003_webseite_html_in_html/003_webseite_html_in_html/mac-pool/Roter_Notausschalter_groß.JPG"
+          alt="Aufbau eines Feuerlöschers"
+        />
+        <img
+          src="/003_webseite_html_in_html/003_webseite_html_in_html/mac-pool/Roter_Notausschalter_klein.JPG"
+          alt="Aufbau eines Feuerlöschers"
+        />
+      </div>
+    </div>
+  </body>
+</html>

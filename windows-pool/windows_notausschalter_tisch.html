@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Weißer Not-Aus-Knopf</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #fff;
+      color: #000;
+      line-height: 1.6;
+    }
+    h2 {
+      color: #b22222;
+      font-size: 2rem;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: flex-start;
+    }
+    .text {
+      width: 100%;
+      min-width: 300px;
+    }
+    .images {
+      width: 100%;
+      display: flex;
+      gap: 20px;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+    .images img {
+      height: 468px; /* 25% größer als 375px */
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+    p {
+      text-align: left;
+      font-size: 1.5rem;
+      margin: 1.5em 0;
+    }
+    @media (max-width: 1000px) {
+      .images img {
+        height: 320px;
+      }
+    }
+    @media (max-width: 600px) {
+      .images {
+        flex-direction: column;
+      }
+      .images img {
+        height: auto;
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Weißer Not-Aus-Knopf</h2>
+  <div class="container">
+    <div class="text">
+      <p>
+        In den PC-Pools des Studiengangs Digital Media befindet sich an jeder Reihe ein weißer, leuchtender Not-Aus-Knopf, mit dem sich die gesamte PC-Reihe auf einmal ausschalten lässt. Dieser Schalter ist gut sichtbar angebracht und dient ausschließlich zur sofortigen Stromtrennung im Notfall.<br><br>
+        Wann darf er benutzt werden? Der weiße Not-Aus-Knopf ist ausschließlich in akuten Gefahrensituationen zu verwenden, zum Beispiel:<br><br>
+        Rauchentwicklung oder Brandgeruch am Arbeitsplatz,<br><br>
+        Kurzschluss oder sichtbar defekter Hardware,<br><br>
+        Gefahr für Personen oder technische Anlagen.<br><br>
+        Ein versehentliches oder unnötiges Drücken kann zu Datenverlust und Schäden an den Geräten führen. Bitte gehe verantwortungsvoll mit dieser Sicherheitsfunktion um – sie schützt im Ernstfall, ist aber kein Ersatz für reguläres Herunterfahren.
+      </p>
+    </div>
+    <div class="images">
+      <img src="/003_webseite_html_in_html/003_webseite_html_in_html/mac-pool/Weißer_Notausschalter.JPG" alt="Aufbau eines Feuerlöschers" />
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+  <title>Sicherheitsunterweisung C‑Lab – Quiz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&family=Roboto:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --space-cadet: #3b305c;
+      --tropical-indigo: #aca0f2;
+      --antiflash-white: #F0F0F0;
+      --text-dark: #0C0D25;
+      --correct-bg: #d4edda;
+      --wrong-bg:  #f8d7da;
+      --correct-border: #28a745;
+      --wrong-border:   #dc3545;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0 }
+    body {
+      font-family:'Roboto',sans-serif;
+      background: var(--tropical-indigo);
+      color: var(--text-dark);
+      padding: 20px;
+      line-height: 1.5;
+    }
+    #back-button {
+      display:inline-block; margin-bottom:20px; padding:6px 14px;
+      border:2px solid var(--space-cadet); border-radius:6px;
+      background:var(--antiflash-white); color:var(--space-cadet);
+      font-weight:600; text-decoration:none;
+      transition:.3s;
+    }
+    #back-button:hover {
+      background:var(--space-cadet); color:white;
+    }
+    .header {
+      text-align:center; margin-bottom:30px;
+      font-family:'Josefin Sans',sans-serif;
+    }
+    .header h1 {
+      color:var(--space-cadet); font-size:2.6rem; margin-bottom:10px;
+    }
+    .header p {
+      font-size:1.1rem; max-width:700px; margin:0 auto;
+    }
+    .lektionen-container {
+      display:flex; flex-wrap:wrap; gap:28px;
+      justify-content:center; max-width:1200px;
+      margin:0 auto 60px;
+    }
+    .lektion {
+      background:var(--antiflash-white); border-radius:12px;
+      box-shadow:0 6px 16px rgba(0,0,0,.1);
+      width:320px; padding:20px; transition:.3s;
+    }
+    .lektion:hover {
+      transform:translateY(-6px);
+      box-shadow:0 10px 24px rgba(0,0,0,.15);
+    }
+    .options { margin-top:15px }
+    .options label {
+      display:block; margin-bottom:10px; padding:8px 10px;
+      border:1px solid #ddd; border-radius:6px;
+      background:var(--antiflash-white); cursor:pointer;
+      transition:.25s;
+    }
+    .options label:hover { background:#eaeaea }
+    .options input { margin-right:8px }
+    .correct {
+      background:var(--correct-bg)!important;
+      border-color:var(--correct-border)!important;
+    }
+    .wrong {
+      background:var(--wrong-bg)!important;
+      border-color:var(--wrong-border)!important;
+    }
+    @media(max-width:900px){ .lektion{width:45%} }
+    @media(max-width:600px){ .lektion{width:100%} }
+  </style>
+</head>
+<body>
+
+  <a id="back-button" href="clab_index.html">⟵ Zurück</a>
+
+  <header class="header">
+    <h1>Quiz Sicherheitsunterweisung C‑Lab</h1>
+    <p>Wähle für jede Frage die richtige(n) Antwort(en).</p>
+  </header>
+
+  <main class="lektionen-container">
+    <!-- 1 -->
+    <section class="lektion"><h2>1. Wer darf sich im C‑Lab aufhalten?</h2>
+      <div class="options">
+        <label><input type="radio" name="q1" value="a"><span>Alle Studierenden der Hochschule</span></label>
+        <label><input type="radio" name="q1" value="b"><span>Besuchende mit Interesse an Digital Media</span></label>
+        <label><input type="radio" name="q1" value="c" data-right><span>Nur Mitarbeiter, Professor:innen und Studierende des Studiengangs Digital Media</span></label>
+        <label><input type="radio" name="q1" value="d"><span>Personen mit einer VR‑Brille</span></label>
+      </div>
+    </section>
+    <!-- 2 -->
+    <section class="lektion"><h2>2. Was ist beim Auftreten eines Schadens zu tun?</h2>
+      <div class="options">
+        <label><input type="radio" name="q2" value="a"><span>Den Schaden selbst reparieren</span></label>
+        <label><input type="radio" name="q2" value="b" data-right><span>Unverzüglich bei zuständigen Mitarbeiter:innen melden</span></label>
+        <label><input type="radio" name="q2" value="c"><span>Den Schaden ignorieren, solange nichts passiert</span></label>
+        <label><input type="radio" name="q2" value="d"><span>In die nächste Vorlesung mitnehmen</span></label>
+      </div>
+    </section>
+    <!-- 3 -->
+    <section class="lektion"><h2>3. Was ist im Umgang mit dem Feuerlöscher zu beachten?</h2>
+      <div class="options">
+        <label><input type="checkbox" name="q3" value="a" data-right><span>Auf sichtbare Schäden und den Druckstand achten</span></label>
+        <label><input type="checkbox" name="q3" value="b"><span>Den Feuerlöscher regelmäßig warten</span></label>
+        <label><input type="checkbox" name="q3" value="c"><span>Nur verwenden, wenn der Hebel heiß ist</span></label>
+        <label><input type="checkbox" name="q3" value="d" data-right><span>Nach dem Einsatz prüfen und ggf. auffüllen lassen</span></label>
+      </div>
+    </section>
+    <!-- 4 -->
+    <section class="lektion"><h2>4. Welche Aussagen zum Verhalten im Brandfall sind korrekt?</h2>
+      <div class="options">
+        <label><input type="checkbox" name="q4" value="a" data-right><span>Fluchtwege freihalten und im Blick behalten</span></label>
+        <label><input type="checkbox" name="q4" value="b"><span>Immer zuerst alle Fenster öffnen</span></label>
+        <label><input type="checkbox" name="q4" value="c" data-right><span>Im Rauch niedrig am Boden bleiben</span></label>
+        <label><input type="checkbox" name="q4" value="d"><span>Den Aufzug benutzen, um schnell zu entkommen</span></label>
+      </div>
+    </section>
+    <!-- 5 -->
+    <section class="lektion"><h2>5. Was passiert beim Drücken des Hebels am Feuerlöscher?</h2>
+      <div class="options">
+        <label><input type="radio" name="q5" value="a"><span>Das Feuer wird automatisch gelöscht</span></label>
+        <label><input type="radio" name="q5" value="b" data-right><span>Das Ventil öffnet sich und das Löschmittel strömt aus</span></label>
+        <label><input type="radio" name="q5" value="c"><span>Der Feuerlöscher explodiert</span></label>
+        <label><input type="radio" name="q5" value="d"><span>Der Feueralarm geht los</span></label>
+      </div>
+    </section>
+    <!-- 6 -->
+    <section class="lektion"><h2>6. Welche Löschtechniken gibt es?</h2>
+      <div class="options">
+        <label><input type="checkbox" name="q6" value="a" data-right><span>Abdecken</span></label>
+        <label><input type="checkbox" name="q6" value="b" data-right><span>Kühlen</span></label>
+        <label><input type="checkbox" name="q6" value="c" data-right><span>Eindämmen</span></label>
+        <label><input type="checkbox" name="q6" value="d"><span>Staubsaugen</span></label>
+        <label><input type="checkbox" name="q6" value="e" data-right><span>Sauerstoffentzug</span></label>
+      </div>
+    </section>
+    <!-- 7 -->
+    <section class="lektion"><h2>7. Welche Verhaltensregeln gelten für den Arbeitsplatz im C‑Lab?</h2>
+      <div class="options">
+        <label><input type="checkbox" name="q7" value="a" data-right><span>Arbeitsbereich nach Nutzung aufräumen</span></label>
+        <label><input type="checkbox" name="q7" value="b"><span>Getränke dürfen offen auf dem Tisch stehen</span></label>
+        <label><input type="checkbox" name="q7" value="c"><span>Der Platz kann für spätere Nutzung belegt bleiben</span></label>
+        <label><input type="checkbox" name="q7" value="d" data-right><span>Essen und Trinken sind nicht gestattet</span></label>
+      </div>
+    </section>
+    <!-- 8 -->
+    <section class="lektion"><h2>8. Was gilt für elektronische Geräte im C‑Lab?</h2>
+      <div class="options">
+        <label><input type="checkbox" name="q8" value="a" data-right><span>Änderungen an der Konfiguration sind untersagt</span></label>
+        <label><input type="checkbox" name="q8" value="b"><span>Eigene Programme dürfen zur Analyse installiert werden</span></label>
+        <label><input type="checkbox" name="q8" value="c" data-right><span>Kabel und Mäuse dürfen nicht umgesteckt werden</span></label>
+        <label><input type="checkbox" name="q8" value="d"><span>USB‑Sticks sind uneingeschränkt erlaubt</span></label>
+      </div>
+    </section>
+    <!-- 9 -->
+    <section class="lektion"><h2>9. Was ist über die Schneidemaschine zu wissen?</h2>
+      <div class="options">
+        <label><input type="radio" name="q9" value="a"><span>Sie darf überall im Raum verwendet werden</span></label>
+        <label><input type="radio" name="q9" value="b" data-right><span>Sie darf nur auf der vorgesehenen Matte verwendet werden</span></label>
+        <label><input type="radio" name="q9" value="c"><span>Sie kann ohne Einweisung benutzt werden</span></label>
+        <label><input type="radio" name="q9" value="d"><span>Sie ist ungefährlich</span></label>
+      </div>
+    </section>
+    <!-- 10 -->
+    <section class="lektion"><h2>10. Wozu dienen die NOT‑AUS‑Schalter im Labor?</h2>
+      <div class="options">
+        <label><input type="radio" name="q10" value="a"><span>Zum Starten von Präsentationen</span></label>
+        <label><input type="radio" name="q10" value="b"><span>Um die Tür zu öffnen</span></label>
+        <label><input type="radio" name="q10" value="c"><span>Zum Ausschalten der VR‑Systeme</span></label>
+        <label><input type="radio" name="q10" value="d" data-right><span>Zur Sicherheit im Notfall</span></label>
+      </div>
+    </section>
+    <!-- 11 -->
+    <section class="lektion"><h2>11. Was darf mit dem Drucker im C‑Lab gemacht werden?</h2>
+      <div class="options">
+        <label><input type="radio" name="q11" value="a" data-right><span>Nach Gebrauch ausschalten</span></label>
+        <label><input type="radio" name="q11" value="b"><span>Dauerhaft eingeschaltet lassen</span></label>
+        <label><input type="radio" name="q11" value="c"><span>Auch für Privatdrucke nutzen</span></label>
+        <label><input type="radio" name="q11" value="d"><span>Nur vom Admin bedienen lassen</span></label>
+      </div>
+    </section>
+    <!-- 12 -->
+    <section class="lektion"><h2>12. Was sind typische Löschmittel in Feuerlöschern?</h2>
+      <div class="options">
+        <label><input type="checkbox" name="q12" value="a" data-right><span>Schaum</span></label>
+        <label><input type="checkbox" name="q12" value="b" data-right><span>CO₂</span></label>
+        <label><input type="checkbox" name="q12" value="c" data-right><span>Pulver</span></label>
+        <label><input type="checkbox" name="q12" value="d"><span>Benzin</span></label>
+        <label><input type="checkbox" name="q12" value="e" data-right><span>Wasser</span></label>
+      </div>
+    </section>
+    <!-- 13 -->
+    <section class="lektion"><h2>13. Warum sollte man im Brandfall keine Panik bekommen?</h2>
+      <div class="options">
+        <label><input type="radio" name="q13" value="a"><span>Weil Feuerlöscher gefährlich sind</span></label>
+        <label><input type="radio" name="q13" value="b" data-right><span>Weil man nur ruhig und überlegt richtig handeln kann</span></label>
+        <label><input type="radio" name="q13" value="c"><span>Weil die Feuerwehr sonst nicht kommt</span></label>
+        <label><input type="radio" name="q13" value="d"><span>Weil andere Menschen es nicht mögen</span></label>
+      </div>
+    </section>
+    <!-- 14 -->
+    <section class="lektion"><h2>14. Was ist bei der Verwendung der VR‑Geräte zu beachten?</h2>
+      <div class="options">
+        <label><input type="radio" name="q14" value="a"><span>Jeder darf sie frei nutzen</span></label>
+        <label><input type="radio" name="q14" value="b"><span>Sie dürfen nur bei Tageslicht benutzt werden</span></label>
+        <label><input type="radio" name="q14" value="c" data-right><span>Nur Fachpersonal oder Tutor:innen dürfen sie anschalten</span></label>
+        <label><input type="radio" name="q14" value="d"><span>Die Geräte müssen vorher mit Wasser gereinigt werden</span></label>
+      </div>
+    </section>
+    <!-- 15 -->
+    <section class="lektion"><h2>15. Was sollte beim Standort eines Feuerlöschers beachtet werden?</h2>
+      <div class="options">
+        <label><input type="checkbox" name="q15" value="a" data-right><span>Gut sichtbar und leicht zugänglich</span></label>
+        <label><input type="checkbox" name="q15" value="b"><span>Hinter Möbeln versteckt</span></label>
+        <label><input type="checkbox" name="q15" value="c"><span>Am besten im Schrank</span></label>
+        <label><input type="checkbox" name="q15" value="d" data-right><span>In der Nähe potenzieller Brandherde wie Küche oder Flur</span></label>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.querySelectorAll('.options input').forEach(input => {
+      input.addEventListener('change', e => {
+        const type = e.target.type;
+        const label = e.target.closest('label');
+        if (type === 'checkbox') {
+          if (e.target.checked) {
+            e.target.hasAttribute('data-right') ?
+              label.classList.add('correct') :
+              label.classList.add('wrong');
+          } else {
+            label.classList.remove('correct','wrong');
+          }
+        } else {
+          const opts = e.target.closest('.options');
+          opts.querySelectorAll('label').forEach(l => l.classList.remove('correct','wrong'));
+          e.target.hasAttribute('data-right') ?
+            label.classList.add('correct') :
+            label.classList.add('wrong');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

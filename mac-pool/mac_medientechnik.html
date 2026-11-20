@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Medientechnik</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background-color: #fff;
+        color: black;
+        line-height: 1.6;
+      }
+
+      h2 {
+        color: #b22222;
+        font-size: 2rem;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column; /* Text oben, Bilder unten */
+        gap: 40px;
+        align-items: flex-start;
+      }
+
+      .text {
+        width: 100%;
+        min-width: 300px;
+      }
+
+      .images {
+        width: 100%;
+        display: flex;
+        gap: 20px;
+        justify-content: flex-start; /* Bilder linksbündig nebeneinander */
+        flex-wrap: wrap; /* falls zu eng, Umbruch */
+      }
+
+      .images img {
+        height: 468px; /* 25% größer als 375px */
+        width: auto;
+        object-fit: contain;
+        display: block;
+      }
+
+      p {
+        text-align: left;
+        font-size: 1.5rem;
+        margin: 1.5em 0;
+      }
+
+      @media (max-width: 600px) {
+        .images img {
+          height: 320px; /* kleinere Höhe auf kleineren Bildschirmen */
+        }
+      }
+
+      @media (max-width: 600px) {
+        .images {
+          flex-direction: column; /* untereinander bei ganz kleinen Displays */
+        }
+        .images img {
+          height: auto;
+          max-width: 100%;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Medientechnik</h2>
+
+    <div class="container">
+      <div class="text">
+        <p>
+          Medientechnik
+Die PC-Pools im sind mit moderner Medientechnik ausgestattet, die praxisnahes und professionelles Arbeiten ermöglicht. Neben leistungsstarken Arbeitsplätzen stehen vielfältige Peripherie- und Präsentationssysteme zur Verfügung. <br>
+Zur Ausstattung gehören unter anderem:<br><br>
+Beamer und Großbildschirme zur gemeinsamen Anzeige von Inhalten,<br><br>
+Audio-Systeme für die Wiedergabe und Bearbeitung von Tonmaterial,<br><br>
+Farbkalibrierte Monitore für präzise Bild- und Videobearbeitung,<br><br>
+Vielfältige Anschlussmöglichkeiten wie HDMI, USB-C und DisplayPort.<br><br>
+Ein zentrales Element der Medientechnik ist ein kleiner Touch-Monitor, der meist in der Nähe des Lehrarbeitsplatzes oder am Dozent*innen-Pult installiert ist. Über dieses Bedienfeld können verschiedene Funktionen des Raumes gesteuert werden, unter anderem: <br>
+Auswahl der Signalquelle (z. B. Dozenten-PC, Laptop, Dokumentenkamera),<br><br>
+Steuerung von Beamer oder Großbildschirm (An/Aus, Eingang wählen),<br><br>
+Lautstärkeregelung für das angeschlossene Audio-System.<br><br>
+Die intuitive Oberfläche ermöglicht eine schnelle und einfache Bedienung – sowohl im Unterrichtsbetrieb als auch bei Präsentationen oder Projektbesprechungen. Die gesamte Medientechnik wird regelmäßig gewartet und aktualisiert, um einen reibungslosen Ablauf und eine zeitgemäße Lernumgebung sicherzustellen.</p>
+        
+      </div>
+
+      <div class="images">
+        <img
+          src="/003_webseite_html_in_html/003_webseite_html_in_html/mac-pool/Pult_1.JPG"
+          alt="Aufbau eines Feuerlöschers"
+        />
+        <img
+          src="/003_webseite_html_in_html/003_webseite_html_in_html/mac-pool/Pult_2.JPG"
+          alt="Aufbau eines Feuerlöschers"
+        />
+        <img
+          src="/003_webseite_html_in_html/003_webseite_html_in_html/mac-pool/Pult_3.JPG"
+          alt="Aufbau eines Feuerlöschers"
+        />
+      </div>
+    </div>
+  </body>
+</html>

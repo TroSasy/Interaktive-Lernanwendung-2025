@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Wimmelbild-Spiel mit einblendbaren Hitboxen</title>
+  <style>
+    canvas {
+      border: 1px solid #000;
+      display: block;
+      margin: 20px auto;
+      cursor: default;
+    }
+  </style>
+</head>
+<body>
+<canvas id="gameCanvas"></canvas>
+
+<script>
+  // === Konfiguration ===
+  const zeigeHitboxen = false; // ← Für Debug: true | Für Präsentation: false oder auskommentieren
+
+  const canvas = document.getElementById("gameCanvas");
+  const ctx = canvas.getContext("2d");
+
+  const fieldWidth = 2732;
+  const fieldHeight = 2048;
+  canvas.width = fieldWidth;
+  canvas.height = fieldHeight;
+
+  const backgroundImg = new Image();
+  //backgroundImg.src = "assets/clab_arbeitsplatz/Voll.png";
+  backgroundImg.src = "assets/clab_arbeitsplatz/Leer.png";
+
+  // === Rechtecke mit optionaler Hitbox ===
+  let rectangles = [
+    {
+      id: "falsch",
+      x: 0,
+      y: 0,
+      width: 2732,
+      height: 2048,
+      imageSrc: "assets/Arbeitsplatz2/Farbflasche.png",
+      hitbox: { x: 630, y: 860, width: 350, height: 470 }
+    },
+    {
+      id: "falsch",
+      x: 0,
+      y: 0,
+      width: 2732,
+      height: 2048,
+      imageSrc: "assets/Arbeitsplatz2/Farbtube.png",
+      hitbox: { x: 820, y: 1330, width: 180, height: 230 }
+    },
+    {
+      id: "falsch",
+      x: 0,
+      y: 0,
+      width: 2732,
+      height: 2048,
+      imageSrc: "assets/Arbeitsplatz2/Lego1.png",
+      hitbox: { x: 1275, y: 1390, width: 115, height: 109}
+    },
+    {
+      id: "falsch",
+      x: 0,
+      y: 0,
+      width: 2732,
+      height: 2048,
+      imageSrc: "assets/Arbeitsplatz2/Lego2.png",
+      hitbox: { x: 1200, y: 1675, width: 120, height: 110}
+    },
+    {
+      id: "falsch",
+      x: 0,
+      y: 0,
+      width: 2732,
+      height: 2048,
+      imageSrc: "assets/Arbeitsplatz2/Lollie1.png",
+      hitbox: { x: 1460, y: 1670, width: 140, height: 190}
+    },
+    {
+      id: "falsch",
+      x: 0,
+      y: 0,
+      width: 2732,
+      height: 2048,
+      imageSrc: "assets/Arbeitsplatz2/Lollie2.png",
+      hitbox: { x: 1100, y: 1400, width: 160, height: 80}
+    },
+    {
+      id: "falsch",
+      x: 0,
+      y: 0,
+      width: 2732,
+      height: 2048,
+      imageSrc: "assets/Arbeitsplatz2/Lollie3.png",
+      hitbox: { x: 900, y: 1580, width: 200, height: 140}
+    },
+    {
+      id: "richtig",
+      x: 0,
+      y: 0,
+      width: 2732,
+      height: 2048,
+      imageSrc: "assets/Arbeitsplatz2/Maus.png"
+    },
+    {
+      id: "falsch",
+      x: 0,
+      y: 0,
+      width: 2732,
+      height: 2048,
+      imageSrc: "assets/Arbeitsplatz2/Spray.png",
+      hitbox: { x: 1480, y: 1350, width: 500, height: 200}
+    }
+  ];
+
+  // === Hitboxen für falsche Bilder erzeugen ===
+  let hitboxes = rectangles
+          .map((rect, index) => {
+            if (rect.id === "falsch") {
+              return {
+                id: rect.id,
+                x: rect.hitbox?.x ?? rect.x,
+                y: rect.hitbox?.y ?? rect.y,
+                width: rect.hitbox?.width ?? rect.width,
+                height: rect.hitbox?.height ?? rect.height,
+                linkedIndex: index
+              };
+            } else {
+              return null;
+            }
+          })
+          .filter(h => h !== null);
+
+  const imageCache = {};
+  let hoverIndex = -1;
+  let clickIndex = -1;
+
+  // === Bilder vorladen ===
+  function preloadImages(callback) {
+    let loadedImages = 0;
+    const totalImages = rectangles.length + 1;
+
+    function checkAllLoaded() {
+      loadedImages++;
+      if (loadedImages === totalImages) {
+        callback();
+      }
+    }
+
+    backgroundImg.onload = checkAllLoaded;
+
+    rectangles.forEach(rect => {
+      const img = new Image();
+      img.src = rect.imageSrc;
+      img.onload = checkAllLoaded;
+      imageCache[rect.imageSrc] = img;
+    });
+  }
+
+  // === Zeichnet das Spiel + optionale Hitboxen ===
+  function drawRectangles() {
+    ctx.clearRect(0, 0, fieldWidth, fieldHeight);
+    ctx.drawImage(backgroundImg, 0, 0, fieldWidth, fieldHeight);
+
+    rectangles.forEach((rect, index) => {
+      const img = imageCache[rect.imageSrc];
+      if (!img) return;
+
+      let drawX = rect.x;
+      let drawY = rect.y;
+      let drawW = rect.width;
+      let drawH = rect.height;
+
+      // NEU: nur Hover/Klick wenn das Bild eine Hitbox hat
+      let isHovered = hitboxes.some(hb => hb.linkedIndex === index && hoverIndex === hb.linkedIndex);
+      let isClicked = hitboxes.some(hb => hb.linkedIndex === index && clickIndex === hb.linkedIndex);
+
+      if (isHovered) {
+        drawW *= 1.05;
+        drawH *= 1.05;
+        drawX -= (drawW - rect.width) / 2;
+        drawY -= (drawH - rect.height) / 2;
+      } else if (isClicked) {
+        drawW *= 0.95;
+        drawH *= 0.95;
+        drawX += (rect.width - drawW) / 2;
+        drawY += (rect.height - drawH) / 2;
+      }
+
+      ctx.drawImage(img, drawX, drawY, drawW, drawH);
+    });
+
+    // === Sichtbare Hitboxen für Debug-Zwecke ===
+    if (zeigeHitboxen) {
+      hitboxes.forEach(hb => {
+        ctx.fillStyle = "rgba(255, 0, 0, 0.3)";
+        ctx.fillRect(hb.x, hb.y, hb.width, hb.height);
+        ctx.strokeStyle = "red";
+        ctx.strokeRect(hb.x, hb.y, hb.width, hb.height);
+      });
+    }
+  }
+
+  // === Gibt Index der Hitbox unter Maus zurück ===
+  function getHoveredHitboxIndex(mouseX, mouseY) {
+    return hitboxes.findIndex(h =>
+            mouseX >= h.x &&
+            mouseX <= h.x + h.width &&
+            mouseY >= h.y &&
+            mouseY <= h.y + h.height
+    );
+  }
+
+  // === Hover-Effekt ===
+  canvas.addEventListener("mousemove", function (e) {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    const newHoverHitboxIndex = getHoveredHitboxIndex(mouseX, mouseY);
+    const newHoverImageIndex =
+            newHoverHitboxIndex !== -1 ? hitboxes[newHoverHitboxIndex].linkedIndex : -1;
+
+    if (hoverIndex !== newHoverImageIndex) {
+      hoverIndex = newHoverImageIndex;
+      canvas.style.cursor = hoverIndex >= 0 ? "pointer" : "default";
+      drawRectangles();
+    }
+  });
+
+  // === Klick auf eine Hitbox ===
+  canvas.addEventListener("click", function (e) {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    const clickedHitboxIndex = getHoveredHitboxIndex(mouseX, mouseY);
+    if (clickedHitboxIndex === -1) return;
+
+    const h = hitboxes[clickedHitboxIndex];
+    const r = rectangles[h.linkedIndex];
+    clickIndex = h.linkedIndex;
+    drawRectangles();
+
+    setTimeout(() => {
+      // Falsches Bild entfernen
+      rectangles.splice(h.linkedIndex, 1);
+      hitboxes.splice(clickedHitboxIndex, 1);
+
+      // Hitbox-Index neu zuordnen
+      hitboxes.forEach((hb, i) => (hb.linkedIndex = i));
+      clickIndex = -1;
+      drawRectangles();
+    }, 150);
+  });
+
+  // === Spiel starten ===
+  preloadImages(drawRectangles);
+</script>
+</body>
+</html>

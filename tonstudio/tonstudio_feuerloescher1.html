@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Feuerlöscher</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #fff;
+      color: #000;
+      line-height: 1.6;
+    }
+
+    h2 {
+      color: #b22222;
+      font-size: 2rem;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .text {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .images {
+      flex-shrink: 0;
+      max-width: 60%; /* Bild darf bis zu 60% des Containers einnehmen */
+    }
+
+    .images img {
+      max-height: 90vh; /* bis zu 90% der Fensterhöhe */
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    p {
+      text-align: left;
+      font-size: 1.5rem;
+      margin: 1.5em 0;
+    }
+
+    @media (max-width: 800px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .images {
+        max-width: 100%;
+      }
+
+      .images img {
+        height: auto;
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Feuerlöscher</h2>
+  <div class="container">
+    <div class="text">
+      <p>
+        Ein Feuerlöscher ist ein tragbares Gerät, das zur Bekämpfung von Bränden eingesetzt wird. Er besteht aus einem Behälter, der mit einem Löschmittel gefüllt ist, und einem Auslöser, der es ermöglicht, das Löschmittel auf den Brand zu sprühen. Feuerlöscher sind in verschiedenen Typen erhältlich, die jeweils für bestimmte Brandklassen geeignet sind.
+        <br><br>
+        <strong>Aufgaben:</strong> <br>
+        - Sofortige Brandbekämpfung in Notfällen <br> 
+        - Verhinderung der Ausbreitung von Bränden <br>
+        - Schutz von Personen und Eigentum vor Feuer <br>
+        - Erste Hilfe bei kleineren Bränden, bevor die Feuerwehr eintrifft <br>
+        <br>
+
+      </p>
+    </div>
+    <div class="images">
+      <img src="/003_webseite_html_in_html/003_webseite_html_in_html/tonstudio/Tonstudio_Feuerloescher.JPG" alt="Tonschrank im Studio" />
+    </div>
+  </div>
+</body>
+</html>

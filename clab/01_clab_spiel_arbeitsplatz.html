@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Arbeitsplatz</title>
+  <style>
+    canvas {
+      border: 1px solid #000;
+      display: block;
+      margin: 20px auto;
+      cursor: default;
+    }
+  </style>
+</head>
+<body>
+<canvas id="gameCanvas"></canvas>
+
+<script>
+  // === Konfiguration ===
+  const zeigeHitboxen = false; // Für Debug: true | Für Präsentation: false
+
+  const canvas = document.getElementById("gameCanvas");
+  const ctx = canvas.getContext("2d");
+
+  const fieldWidth = 2732;
+  const fieldHeight = 2048;
+  canvas.width = fieldWidth;
+  canvas.height = fieldHeight;
+
+  const backgroundImg = new Image();
+  backgroundImg.src = "Leer.png";
+  //backgroundImg.src = "Voll.png";
+
+  // === Rechtecke mit Bildposition und Hitbox ===
+  let rectangles = [
+    {
+      id: "falsch",
+      x: 0,
+      y: 0,
+      width: 2732,
+      height: 2048,
+      imageSrc: "Farbflasche.png",
+      hitbox: { x: 630, y: 860, width: 350, height: 470 },
+    },
+    {
+      id: "falsch",
+      x: 0,
+      y: 0,
+      width: 2732,
+      height: 2048,
+      imageSrc: "Farbtube.png",
+      hitbox: { x: 820, y: 1330, width: 180, height: 230 },
+    },
+    {
+      id: "falsch",
+      x: 0,
+      y: 0,
+      width: 2732,
+      height: 2048,
+      imageSrc: "Lego1.png",
+      hitbox: { x: 1275, y: 1390, width: 115, height: 109 },
+    },
+    {
+      id: "falsch",
+      x: 0,
+      y: 0,
+      width: 2732,
+      height: 2048,
+      imageSrc: "Lego2.png",
+      hitbox: { x: 1200, y: 1675, width: 120, height: 110 },
+    },
+    {
+      id: "falsch",
+      x: 0,
+      y: 0,
+      width: 2732,
+      height: 2048,
+      imageSrc: "Lollie1.png",
+      hitbox: { x: 1460, y: 1670, width: 140, height: 190 },
+    },
+    {
+      id: "falsch",
+      x: 0,
+      y: 0,
+      width: 2732,
+      height: 2048,
+      imageSrc: "Lollie2.png",
+      hitbox: { x: 1100, y: 1400, width: 160, height: 80 },
+    },
+    {
+      id: "falsch",
+      x: 0,
+      y: 0,
+      width: 2732,
+      height: 2048,
+      imageSrc: "Lollie3.png",
+      hitbox: { x: 900, y: 1580, width: 200, height: 140 },
+    },
+    {
+      id: "richtig",
+      x: 0,
+      y: 0,
+      width: 2732,
+      height: 2048,
+      imageSrc: "Maus.png",
+      hitbox: { x: 1785, y: 1570, width: 270, height: 136 },
+    },
+    {
+      id: "falsch",
+      x: 0,
+      y: 0,
+      width: 2732,
+      height: 2048,
+      imageSrc: "Spray.png",
+      hitbox: { x: 1480, y: 1350, width: 500, height: 180 },
+    },
+  ];
+
+  // === Hitboxen für alle Bilder erzeugen ===
+  let hitboxes = rectangles.map((rect, index) => ({
+    id: rect.id,
+    x: rect.hitbox?.x ?? rect.x,
+    y: rect.hitbox?.y ?? rect.y,
+    width: rect.hitbox?.width ?? rect.width,
+    height: rect.hitbox?.height ?? rect.height,
+    linkedIndex: index,
+    feedback: false, // für Feedback-Effekt bei "richtig"
+  }));
+
+  const imageCache = {};
+  let clickIndex = -1;
+
+  // === Bilder vorladen ===
+  function preloadImages(callback) {
+    let loadedImages = 0;
+    const totalImages = rectangles.length + 1;
+
+    function checkAllLoaded() {
+      loadedImages++;
+      if (loadedImages === totalImages) callback();
+    }
+
+    backgroundImg.onload = checkAllLoaded;
+
+    rectangles.forEach((rect) => {
+      const img = new Image();
+      img.src = rect.imageSrc;
+      img.onload = checkAllLoaded;
+      imageCache[rect.imageSrc] = img;
+    });
+  }
+
+  // === Spiel zeichnen ===
+  function drawRectangles() {
+    ctx.clearRect(0, 0, fieldWidth, fieldHeight);
+    ctx.drawImage(backgroundImg, 0, 0, fieldWidth, fieldHeight);
+
+    rectangles.forEach((rect, index) => {
+      const img = imageCache[rect.imageSrc];
+      if (img) ctx.drawImage(img, rect.x, rect.y, rect.width, rect.height);
+    });
+
+    // === Sichtbare Hitboxen + Feedback anzeigen ===
+    hitboxes.forEach((hb) => {
+      if (zeigeHitboxen || hb.feedback) {
+        ctx.fillStyle =
+                hb.id === "falsch"
+                        ? "rgba(255, 0, 0, 0.3)"
+                        : "rgba(0, 255, 0, 0.3)";
+        ctx.fillRect(hb.x, hb.y, hb.width, hb.height);
+        ctx.strokeStyle = hb.id === "falsch" ? "red" : "green";
+        ctx.strokeRect(hb.x, hb.y, hb.width, hb.height);
+      }
+    });
+  }
+
+  // === Gibt Index der Hitbox unter Maus zurück ===
+  function getHoveredHitboxIndex(mouseX, mouseY) {
+    return hitboxes.findIndex(
+            (h) =>
+                    mouseX >= h.x &&
+                    mouseX <= h.x + h.width &&
+                    mouseY >= h.y &&
+                    mouseY <= h.y + h.height
+    );
+  }
+
+  // === Klick auf eine Hitbox ===
+  canvas.addEventListener("click", function (e) {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    const clickedIndex = getHoveredHitboxIndex(mouseX, mouseY);
+    if (clickedIndex === -1) return;
+
+    const hitbox = hitboxes[clickedIndex];
+    const rectIndex = hitbox.linkedIndex;
+
+    if (rectangles[rectIndex].id === "falsch") {
+      rectangles.splice(rectIndex, 1);
+      hitboxes.splice(clickedIndex, 1);
+      // Indizes neu zuweisen
+      hitboxes.forEach((hb, i) => (hb.linkedIndex = i));
+    } else if (rectangles[rectIndex].id === "richtig") {
+      hitbox.feedback = true;
+      drawRectangles();
+      setTimeout(() => {
+        hitbox.feedback = false;
+        drawRectangles();
+      }, 300);
+    }
+
+    drawRectangles();
+  });
+
+  preloadImages(drawRectangles);
+</script>
+</body>
+</html>

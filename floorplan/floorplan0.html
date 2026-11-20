@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Floorplan</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        font-family: sans-serif;
+      }
+
+      .back-button {
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        padding: 0.75rem 1.5rem;
+        background-color: #3B305C;
+        color: white;
+        font-family: 'Josefin Sans', sans-serif;
+        font-size: 1rem;
+        font-weight: bold;
+        text-decoration: none;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        z-index: 9999;
+      }
+
+      .floor-button {
+        position: absolute;
+        top: 5rem;
+        left: 1rem;
+        padding: 0.75rem 1.5rem;
+        background-color: #3B305C;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: bold;
+        text-decoration: none;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        z-index: 10;
+      }
+
+      .image-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .image-container img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .poi {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        text-decoration: none;
+        border-radius: 4px;
+      }
+
+      /* Pulsierender Punkt */
+      .pulse {
+        width: 20px;
+        height: 20px;
+        background-color: rgba(255, 255, 255, 0.6);
+        border-radius: 50%;
+        animation: pulse-animation 1.5s infinite;
+      }
+
+      @keyframes pulse-animation {
+        0% {
+          transform: scale(3);
+          opacity: 0.6;
+        }
+        50% {
+          transform: scale(5);
+          opacity: 0.3;
+        }
+        100% {
+          transform: scale(3);
+          opacity: 0.6;
+        }
+      }
+
+
+
+      .floor-button:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+  <body>
+
+  <!-- Zurück-Button -->
+  <a href="../index.php" class="back-button">← Zurück</a>
+
+    <div class="image-container">
+      <button class="floor-button"
+              onclick="location.href='floorplan1.html'">
+        Erster Stock
+      </button>
+
+      <img
+        src="floorplan1.svg"
+        alt="Floorplan"
+      />
+
+      <!-- POIs mit pulsierendem Punkt -->
+      <!-- clab -->
+      <a href="../clab/clab_index.html" class="poi"
+         style="left: 16.5%; top: 64.89%; width:190px; height: 104px; background: rgba(255,0,0,0);">
+        <span class="pulse"></span>
+      </a>
+
+      <!-- sraum -->
+      <a href="../seminarraum/seminarraum_index.html" class="poi"
+         style="left: 28.9%; top: 64.89%; width:144px; height: 104px; background: rgba(255,0,0,0);">
+        <span class="pulse"></span>
+      </a>
+
+      <!-- tonstudio -->
+      <a href="../tonstudio/tonstudio_index.html" class="poi"
+         style="left: 11.5%; top: 41.5%; width: 56px; height: 132px; background: rgba(255,0,0,0);">
+        <span class="pulse"></span>
+      </a>
+
+      <!-- index -->
+      <a href="../index.html" class="poi"
+         style="left: 11.5%; top: 37.4%; width: 56px; height: 52px; background: rgba(255,0,0,0);">
+        <span class="pulse"></span>
+      </a>
+    </div>
+  </body>
+</html>

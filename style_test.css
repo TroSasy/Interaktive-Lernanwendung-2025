@@ -1,0 +1,269 @@
+@media screen and (max-width: 2048px) {
+    html, body {
+        /* transform: scale(0.8); */
+        transform-origin: top left;
+        overflow: auto;
+    }
+}
+:root {
+    /* Farben */
+    --space-cadet: #3b305c;
+    --tropical-indigo: #aca0f2;
+    --antiflash-white: #F0F0F0;
+    --text-dark: #0C0D25;
+
+    /* Grid und Abstände (8px Softgrid) */
+    --grid-unit: 8px;
+    --margin-horizontal: 144px;
+    --margin-vertical: 160px;
+    --nav-margin-right: calc(var(--grid-unit) * 8); /* 64px */
+
+    /* Schriftgrößen */
+    --fs-xl: 96px;  /* bleibt gleich */
+    --fs-l: 80px;   /* vorher 64px */
+    --fs-m: 64px;   /* vorher 48px */
+    --fs-s: 48px;   /* vorher 40px */
+    --fs-xs: 40px;  /* vorher 32px */
+
+    /* Rundungen */
+    --border-radius: 28px;
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--space-cadet);
+    color: var(--text-dark);
+    position: relative;
+    overflow: hidden; /* neu hinzugefügt */
+}
+/* Navbar Styling (seitlich, vertikal) */
+.navbar {
+    position: fixed;
+    top: var(--margin-vertical);
+    left: var(--margin-horizontal);
+    width: 320px;
+    height: calc(100% - 2 * var(--margin-vertical));
+    background-color: var(--space-cadet);
+    border-radius: var(--border-radius);
+    padding: calc(var(--grid-unit) * 4);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.logo {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: var(--fs-m);
+    margin-bottom: calc(var(--grid-unit) * 8);
+    color: var(--tropical-indigo);
+}
+
+.navbar ul {
+    list-style: none;
+}
+
+.navbar ul li {
+    margin-bottom: calc(var(--grid-unit) * 4);
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    font-size: var(--fs-xs);
+    color: var(--antiflash-white);
+}
+
+.navbar ul li a:hover {
+    color: var(--antiflash-white);
+}
+
+/* Lektionen Container */
+.lektionen-container {
+    margin-top: calc(var(--margin-vertical) + 200px); /* Platz für Header */
+    margin-left: calc(var(--margin-horizontal) + 320px + var(--nav-margin-right));
+    margin-right: var(--margin-horizontal);
+    margin-bottom: var(--margin-vertical);
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--grid-unit) * 4);
+}
+
+/* Lektionen */
+.lektion {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /*align-items: flex-start;*/
+    background-color: var(--antiflash-white);
+    border-radius: var(--border-radius);
+    padding: 32px 0; /* 64px vertikal verteilt */
+    overflow: visible   ;
+    text-decoration: none;
+    color: inherit;
+
+}
+
+/* Linker Textbereich */
+.lektion .text {
+    width: 50%;
+    padding: 0 calc(var(--grid-unit) * 4); /* Nur horizontal Padding */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.lektion .bild {
+    width: 50%;
+    padding: 0 calc(var(--grid-unit) * 4);
+    display: flex;
+    align-items: stretch; /* wichtig, damit Bild sich mitzieht */
+    justify-content: center;
+}
+
+.lektion .bild img {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* optional: 'contain' wenn du kein Zuschneiden willst */
+    border-radius: var(--border-radius);
+}
+.lektion .text,
+.lektion .bild {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+
+.lektion h2 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: var(--fs-s);
+    color: var(--space-cadet);
+    margin-bottom: calc(var(--grid-unit) * 2);
+}
+
+.lektion p {
+    font-size: var(--fs-xs);
+    color: var(--text-dark);
+}
+
+/* Hase Platzhalter (im Vordergrund) */
+.hase-placeholder {
+    position: fixed;
+    top: calc(var(--margin-vertical) + 32px); /* leicht unterhalb vom oberen Rand */
+    right: var(--margin-horizontal);
+    width: 128px;
+    height: 128px;
+    background-color: var(--antiflash-white);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 3000; /* über Header und Lektionen */
+}
+
+/* Header-Bereich */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--tropical-indigo);
+    color: var(--antiflash-white);
+    padding: calc(var(--grid-unit) * 8) var(--margin-horizontal);
+    z-index: 2000;
+}
+
+.header h1 {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: var(--fs-xl);
+    margin-bottom: calc(var(--grid-unit) * 4);
+}
+
+.header p {
+    font-size: var(--fs-xs);
+    max-width: 60%;
+}
+
+/* Anpassen der Navbar-Position */
+.navbar {
+    top: calc(var(--margin-vertical) + 200px);
+}
+
+/* Styling für das 2D-Overlay-Fenster */
+#info-window {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 32px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 80%;
+    height: 80%;
+    overflow: auto;
+    text-align: center;
+}
+#info-window button {
+    margin-top: 32px;
+    padding: 16px 32px;
+    cursor: pointer;
+}
+
+#back-button {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #3B305C;
+    color: white;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    z-index: 10001;
+    pointer-events: auto;
+}
+
+
+
+.fortschritt-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    overflow: hidden;
+}
+
+.fortschritt-balken {
+    height: 100%;
+    width: 0%;
+    background-color: #4caf50;
+    transition: width 0.5s ease-in-out;
+}
+a-scene {
+    position: relative !important;
+    z-index: 1 !important;
+}
+canvas {
+    z-index: 1 !important;
+}
+

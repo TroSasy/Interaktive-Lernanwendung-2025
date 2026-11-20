@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Keyboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #fff;
+      color: #000;
+      line-height: 1.6;
+    }
+    h2 {
+      color: #b22222;
+      font-size: 2rem;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: flex-start;
+    }
+    .text {
+      width: 100%;
+      min-width: 300px;
+    }
+    .images {
+      width: 100%;
+      display: flex;
+      gap: 20px;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+    .images img {
+      height: 468px; /* 25% größer als 375px */
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+    p {
+      text-align: left;
+      font-size: 1.5rem;
+      margin: 1.5em 0;
+    }
+    @media (max-width: 1000px) {
+      .images img {
+        height: 320px;
+      }
+    }
+    @media (max-width: 600px) {
+      .images {
+        flex-direction: column;
+      }
+      .images img {
+        height: auto;
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Keyboard</h2>
+  <div class="container">
+    <div class="text">
+      <p>
+        Das Keyboard ist ein zentrales Element im Tonstudio, das für die Musikproduktion und -komposition verwendet wird. <br> <br> Es ermöglicht Musikern und Produzenten, Melodien, Harmonien und Rhythmen zu erstellen und zu bearbeiten. <br><br>
+        <strong>Aufgaben:</strong> <br>
+        - Eingabe von Noten und Melodien in digitale Audio-Workstations (DAWs) <br>
+        - Steuerung von Software-Instrumenten und Effekten <br>
+        - Aufnahme von MIDI-Daten für die spätere Bearbeitung <br>
+        - Verwendung von Tastenanschlägen zur Steuerung von Parametern in der DAW <br>
+
+      </p>
+    </div>
+    <div class="images">
+      <img src="/003_webseite_html_in_html/003_webseite_html_in_html/tonstudio/Keyboard.JPG" alt="Aufbau eines Feuerlöschers" />
+    </div>
+  </div>
+</body>
+</html>

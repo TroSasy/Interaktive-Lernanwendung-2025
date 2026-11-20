@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>E-Learning Startseite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@500&family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style_test.css">
+    <style>
+        .question-block {
+            background-color: var(--antiflash-white);
+            padding: 48px;
+            border-radius: var(--border-radius);
+            margin-bottom: 32px;
+        }
+        .question {
+            margin-bottom: 24px;
+        }
+        .question label {
+            display: block;
+            margin: 4px 0;
+        }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .result {
+            font-weight: bold;
+            margin-top: 40px;
+            font-size: var(--fs-s);
+        }
+        button {
+            margin-top: 24px;
+            padding: 16px 32px;
+            font-size: var(--fs-xs);
+            border-radius: 12px;
+            background-color: var(--space-cadet);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<a href="/002_webseite_TEST/9_fabi_website/clab/clab_index.html" id="back-button">⭥ Zurück</a>
+
+<header class="header">
+    <h1>Quiz</h1>
+    <p>Herzlich willkommen zum Sicherheitsunterweisungs-Quiz. Beantworte die Fragen und teste dein Wissen.</p>
+</header>
+
+<nav class="navbar">
+    <ul>
+        <li>
+            <a href="#lektion1">Zurück zur Übersicht</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="hase-placeholder"></div>
+
+<main class="lektionen-container">
+    <div class="question-block">
+        <form id="quizForm"></form>
+        <div id="result" class="result"></div>
+        <button type="button" onclick="auswerten()">Auswerten</button>
+    </div>
+</main>
+
+<script>
+    function auswerten() {
+        const questions = document.querySelectorAll(".question");
+        let richtig = 0;
+
+        questions.forEach((question) => {
+            const type = question.dataset.type;
+            const correct = question.dataset.correct.split(",").map(Number);
+            const inputs = question.querySelectorAll("input");
+            const labels = question.querySelectorAll("label");
+
+            let userAnswers = [];
+            inputs.forEach((input, i) => {
+                labels[i].classList.remove("correct", "incorrect");
+                if (input.checked) {
+                    userAnswers.push(parseInt(input.value));
+                }
+            });
+
+            let isCorrect = false;
+            if (type === "radio") {
+                isCorrect = userAnswers.length === 1 && userAnswers[0] === correct[0];
+            } else if (type === "checkbox") {
+                isCorrect = userAnswers.length === correct.length && userAnswers.every(val => correct.includes(val));
+            }
+
+            if (isCorrect) {
+                labels.forEach((label, i) => {
+                    if (inputs[i].checked) label.classList.add("correct");
+                });
+                richtig++;
+            } else {
+                labels.forEach((label, i) => {
+                    if (inputs[i].checked && !correct.includes(parseInt(inputs[i].value))) {
+                        label.classList.add("incorrect");
+                    } else if (correct.includes(parseInt(inputs[i].value))) {
+                        label.classList.add("correct");
+                    }
+                });
+            }
+        });
+
+        const gesamt = questions.length;
+        const prozent = Math.round((richtig / gesamt) * 100);
+        document.getElementById("result").innerHTML = `Du hast ${richtig} von ${gesamt} Fragen richtig beantwortet. (${prozent}%)`;
+    }
+</script>
+<script src="quizfragen.js"></script>
+</body>
+</html>

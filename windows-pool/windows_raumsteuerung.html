@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Raumsteuerung</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #fff;
+      color: #000;
+      line-height: 1.6;
+    }
+    h2 {
+      color: #b22222;
+      font-size: 2rem;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: flex-start;
+    }
+    .text {
+      width: 100%;
+      min-width: 300px;
+    }
+    .images {
+      width: 100%;
+      display: flex;
+      gap: 20px;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+    .images img {
+      height: 468px; /* 25% größer als 375px */
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+    p {
+      text-align: left;
+      font-size: 1.5rem;
+      margin: 1.5em 0;
+    }
+    @media (max-width: 1000px) {
+      .images img {
+        height: 320px;
+      }
+    }
+    @media (max-width: 600px) {
+      .images {
+        flex-direction: column;
+      }
+      .images img {
+        height: auto;
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Raumsteuerung</h2>
+  <div class="container">
+    <div class="text">
+      <p>
+        Die PC-Pools sind nicht nur technisch, sondern auch raumklimatisch durchdacht ausgestattet. Eine zentrale Rolle spielt dabei die Raumtechnik, insbesondere im Hinblick auf Beleuchtung und Sonnenschutz – beides entscheidend für konzentriertes, augenschonendes Arbeiten.<br><br>
+        Die Räume verfügen über eine blendfreie, dimmbare LED-Deckenbeleuchtung, die gleichmäßiges Licht ohne harte Schatten ermöglicht. Je nach Tageszeit und Nutzung (z. B. Präsentation vs. Bildschirmarbeit) kann die Helligkeit individuell angepasst werden. So lässt sich eine angenehme Arbeitsatmosphäre schaffen – egal ob für konzentriertes Arbeiten oder gemeinsames Besprechen.<br><br>
+        Große Fensterflächen sorgen für natürliches Licht, das durch den vorhandenen elektrischen Sonnenschutz reguliert werden kann. Über die automatisierten Jalousien oder Rollos lässt sich die Sonneneinstrahlung gezielt steuern, um Blendung und Reflexionen auf Monitoren zu vermeiden.<br><br>
+        Sowohl die Beleuchtung als auch der Sonnenschutz lassen sich komfortabel über einen zentralen Touchscreen im Raum bedienen. So ist eine flexible und nutzerfreundliche Anpassung der Raumtechnik jederzeit möglich.<br><br>
+        </p>
+    </div>
+    <div class="images">
+      <img src="/003_webseite_html_in_html/003_webseite_html_in_html/mac-pool/Raumsteuerung.JPG" alt="Aufbau eines Feuerlöschers" />
+    </div>
+  </div>
+</body>
+</html>

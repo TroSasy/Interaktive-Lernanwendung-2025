@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Rechteck-Spiel</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+            display: block;
+            margin: 20px auto;
+            cursor: default; /* Standard-Cursor */
+        }
+    </style>
+</head>
+<body>
+<canvas id="gameCanvas"></canvas>
+<script>
+    // === Canvas Setup ===
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // Spielfeldgröße
+    const fieldWidth = 2732;
+    const fieldHeight = 2048;
+    canvas.width = fieldWidth;
+    canvas.height = fieldHeight;
+
+    // Hintergrundbild für das Spielfeld
+    const backgroundImg = new Image();
+    backgroundImg.src = "assets/Arbeitsplatz2/Voll.png";
+
+    // Rechtecke mit Bild, Position und Erkennungs-ID
+    const rectangles = [
+        { id: "richtig", x: 0, y: 0, width: 3744 , height: 2496, color: "lightgreen", imageSrc: "assets/Arbeitsplatz2/Farbflasche.png" },
+        { id: "falsch", x: 2100, y: 100, width: 500, height: 500, color: "pink", imageSrc: "assets/Arbeitsplatz2/Farbtube.png" },
+        { id: "falsch", x: 350, y: 200, width: 600, height: 600, color: "pink", imageSrc: "assets/Arbeitsplatz2/Lego1.png" },
+        { id: "richtig", x: 100, y: 1080, width: 600, height: 600, color: "lightgreen", imageSrc: "assets/Arbeitsplatz2/Lego2.png" },
+        { id: "richtig", x: 100, y: 1080, width: 600, height: 600, color: "lightgreen", imageSrc: "assets/Arbeitsplatz2/Lego3.png" },
+        { id: "richtig", x: 100, y: 1080, width: 600, height: 600, color: "lightgreen", imageSrc: "assets/Arbeitsplatz2/Lollie1.png" },
+        { id: "richtig", x: 100, y: 1080, width: 600, height: 600, color: "lightgreen", imageSrc: "assets/Arbeitsplatz2/Lollie2.png" },
+        { id: "richtig", x: 100, y: 1080, width: 600, height: 600, color: "lightgreen", imageSrc: "assets/Arbeitsplatz2/Lollie3.png" },
+        { id: "richtig", x: 100, y: 1080, width: 600, height: 600, color: "lightgreen", imageSrc: "assets/Arbeitsplatz2/Lollie4.png" },
+        { id: "richtig", x: 100, y: 1080, width: 600, height: 600, color: "lightgreen", imageSrc: "assets/Arbeitsplatz2/Lollie5.png" },
+        { id: "richtig", x: 100, y: 1080, width: 600, height: 600, color: "lightgreen", imageSrc: "assets/Arbeitsplatz2/Spray.png" },
+    ];
+
+    const imageCache = {};       // Zwischenspeicher für geladene Bilder
+    let hoverIndex = -1;         // Index des Rechtecks, über dem sich die Maus befindet
+    let clickIndex = -1;         // Index des geklickten Rechtecks (für Klickanimation)
+
+    // === Bilder vorladen ===
+    function preloadImages(callback) {
+        let loadedImages = 0;
+        const totalImages = rectangles.length + 1; // +1 für Hintergrund
+
+        function checkAllLoaded() {
+            loadedImages++;
+            if (loadedImages === totalImages) {
+                callback(); // Wenn alle geladen sind → zeichnen
+            }
+        }
+
+        backgroundImg.onload = checkAllLoaded;
+
+        // Rechteck-Bilder vorladen
+        rectangles.forEach(rect => {
+            const img = new Image();
+            img.src = rect.imageSrc;
+            img.onload = checkAllLoaded;
+            imageCache[rect.imageSrc] = img;
+        });
+    }
+
+    // === Zeichenfunktion ===
+    function drawRectangles() {
+        ctx.clearRect(0, 0, fieldWidth, fieldHeight);
+        ctx.drawImage(backgroundImg, 0, 0, fieldWidth, fieldHeight); // Hintergrund
+
+        rectangles.forEach((rect, index) => {
+            const img = imageCache[rect.imageSrc];
+            if (img) {
+                let drawX = rect.x;
+                let drawY = rect.y;
+                let drawW = rect.width;
+                let drawH = rect.height;
+
+                // Hover-Effekt: Bild um 5% vergrößern
+                if (hoverIndex === index) {
+                    drawW *= 1.05;
+                    drawH *= 1.05;
+                    drawX -= (drawW - rect.width) / 2;
+                    drawY -= (drawH - rect.height) / 2;
+                }
+                // Klick-Effekt: Bild um 5% verkleinern
+                else if (clickIndex === index) {
+                    drawW *= 0.95;
+                    drawH *= 0.95;
+                    drawX += (rect.width - drawW) / 2;
+                    drawY += (rect.height - drawH) / 2;
+                }
+
+               // ctx.drawImage(img, drawX, drawY, drawW, drawH); // Bild zeichnen
+                ctx.drawImage(img, drawX, drawY); // Bild zeichnen
+            }
+        });
+    }
+
+    // === Mausposition ermitteln ===
+    function getHoveredIndex(mouseX, mouseY) {
+        return rectangles.findIndex(r =>
+            mouseX >= r.x &&
+            mouseX <= r.x + r.width &&
+            mouseY >= r.y &&
+            mouseY <= r.y + r.height
+        );
+    }
+
+    // === Hover-Ereignis ===
+    canvas.addEventListener("mousemove", function (e) {
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        const newHoverIndex = getHoveredIndex(mouseX, mouseY);
+        if (hoverIndex !== newHoverIndex) {
+            hoverIndex = newHoverIndex;
+            canvas.style.cursor = hoverIndex >= 0 ? "pointer" : "default"; // Cursor ändern
+            drawRectangles(); // Neu zeichnen bei Hover-Änderung
+        }
+    });
+
+    // === Klick-Ereignis ===
+    canvas.addEventListener("click", function (e) {
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
+        const clickedIndex = getHoveredIndex(mouseX, mouseY);
+        clickIndex = clickedIndex; // Für Klickanimation
+        drawRectangles();
+
+        if (clickedIndex !== -1) {
+            const r = rectangles[clickedIndex];
+            setTimeout(() => {
+                if (r.id === "falsch") {
+                    rectangles.splice(clickedIndex, 1); // Falsches Bild entfernen
+                } else if (r.id === "richtig") {
+                    ctx.fillStyle = "red"; // Richtiges Bild blinkt rot
+                    ctx.fillRect(r.x, r.y, r.width, r.height);
+                    setTimeout(drawRectangles, 300); // Danach neu zeichnen
+                }
+                clickIndex = -1;
+                drawRectangles(); // Klickanimation zurücksetzen
+            }, 150);
+        }
+    });
+
+    // Spiel starten nach dem Vorladen der Bilder
+    preloadImages(drawRectangles);
+</script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+  <title>Sicherheitsunterweisung – Tonstudio</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aframe/1.7.0/aframe.min.js"></script>
+  <link rel="stylesheet" href="../style_test.css" />
+
+  <style>
+    /* Overlay */
+    #overlay-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 999;
+    }
+
+    #info-window {
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 70%;
+      background: #fff;
+      border: 2px solid #888;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      z-index: 1000;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #info-frame {
+      width: 100%;
+      height: 90%;
+      border: none;
+    }
+
+    #overlay-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 8px;
+    }
+
+    #overlay-controls button {
+      padding: 8px 16px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <a-scene>
+    <a-sky src="W0_Tonkabine.jpg"
+           rotation="0 -100 0"></a-sky>
+
+    <a-camera look-controls="enabled:false"
+              drag-rotate
+              cursor="rayOrigin:mouse;raycaster:objects:[open-window],[link-to-page]">
+    </a-camera>
+  </a-scene>
+
+  <!-- Overlay -->
+  <div id="overlay-backdrop"></div>
+  <div id="info-window">
+    <iframe id="info-frame"></iframe>
+    <div id="overlay-controls">
+      <button onclick="closeOverlay()">Schließen</button>
+    </div>
+  </div>
+
+  <script>
+    /* Drag‑Rotate Kamera */
+    AFRAME.registerComponent("drag-rotate", {
+      init() {
+        const cam = this.el.object3D;
+        let drag = false;
+        document.addEventListener("mousedown", () => drag = true);
+        document.addEventListener("mouseup", () => drag = false);
+        document.addEventListener("mousemove", e => {
+          if (!drag) return;
+          cam.rotation.y += (e.movementX || 0) * 0.002;
+          cam.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2,
+            cam.rotation.x + (e.movementY || 0) * 0.002));
+        });
+      }
+    });
+
+    /* POI‑Overlay (Puls + Klickpunkt) */
+    AFRAME.registerComponent("poi-overlay", {
+      init() {
+        const wrap = this.el, id = wrap.getAttribute("data-id");
+
+        const pulse = document.createElement("a-sphere");
+        pulse.setAttribute("radius", "0.2");
+        pulse.setAttribute("material", "color:white;shader:flat;opacity:0.5");
+        pulse.setAttribute("animation", "property:scale;to:0.12 0.12 0.12;dur:1500;loop:true;dir:alternate");
+        wrap.appendChild(pulse);
+
+        const fixed = document.createElement("a-sphere");
+        fixed.setAttribute("radius", "0.15");
+        fixed.setAttribute("material", "color:red;shader:flat;opacity:0.8");
+        fixed.setAttribute("open-window", "");
+        fixed.setAttribute("data-id", id);
+        wrap.appendChild(fixed);
+      }
+    });
+
+    let curLinks = [], curSlide = 0;
+
+    /* Overlay öffnen */
+    AFRAME.registerComponent("open-window", {
+      init() {
+        this.el.addEventListener("click", () => {
+          const id = this.el.getAttribute("data-id"),
+                data = poiData[id];
+          if (!data || !Array.isArray(data.links)) return;
+          curLinks = data.links;
+          curSlide = 0;
+          loadSlide(0);
+          document.getElementById("overlay-backdrop").style.display = "block";
+          document.getElementById("info-window").style.display = "flex";
+        });
+      }
+    });
+
+    function loadSlide(i) {
+      document.getElementById("info-frame").src = curLinks[i];
+    }
+
+    function closeOverlay() {
+      document.getElementById("overlay-backdrop").style.display = "none";
+      document.getElementById("info-window").style.display = "none";
+      document.getElementById("info-frame").src = "about:blank";
+    }
+
+    document.getElementById("overlay-backdrop").onclick = closeOverlay;
+
+    /* Seitenwechsel‑Dummy */
+    AFRAME.registerComponent("link-to-page", {
+      init() {
+        this.el.addEventListener("click", () => window.location.href = "C-Lab-1.html");
+      }
+    });
+
+    /* Overlay reset bei Laden */
+    window.addEventListener("DOMContentLoaded", closeOverlay);
+  </script>
+</body>
+</html>

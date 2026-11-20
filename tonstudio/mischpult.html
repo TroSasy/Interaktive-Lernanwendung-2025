@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mischpult</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #fff;
+      color: #000;
+      line-height: 1.6;
+    }
+    h2 {
+      color: #b22222;
+      font-size: 2rem;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      align-items: flex-start;
+    }
+    .text {
+      width: 100%;
+      min-width: 300px;
+    }
+    .images {
+      width: 100%;
+      display: flex;
+      gap: 20px;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+    .images img {
+      height: 468px; /* 25% größer als 375px */
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+    p {
+      text-align: left;
+      font-size: 1.5rem;
+      margin: 1.5em 0;
+    }
+    @media (max-width: 1000px) {
+      .images img {
+        height: 320px;
+      }
+    }
+    @media (max-width: 600px) {
+      .images {
+        flex-direction: column;
+      }
+      .images img {
+        height: auto;
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Mischpult</h2>
+  <div class="container">
+    <div class="text">
+      <p>
+        Mischpult / DAW (Digital Audio Workstation) <br> <br>
+Warum wichtig: Hier wird das Signal verarbeitet, kontrolliert und gespeichert. Pegel, Effekte, Routing – alles läuft hier zusammen. <br> <br>
+        <strong>Aufgaben:</strong> <br>
+        - Signale von Mikrofonen, Instrumenten und anderen Quellen aufnehmen <br>
+        - Lautstärke, Klangfarbe und Effekte anpassen <br>
+        - Spuren mischen und abmischen für den finalen Mix <br>
+        - Routing der Signale zu den richtigen Ausgängen (z.B. Lautsprecher, Kopfhörer) <br>
+        - Aufnahme von Audio in die DAW für weitere Bearbeitung
+
+      </p>
+    </div>
+    <div class="images">
+      <img src="/003_webseite_html_in_html/003_webseite_html_in_html/tonstudio/Mischpult.JPG" alt="Aufbau eines Feuerlöschers" />
+    </div>
+  </div>
+</body>
+</html>

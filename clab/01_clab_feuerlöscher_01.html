@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notruf</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        padding: 40px;
+        background: linear-gradient(135deg, #f8fafc 0%, #e3e6ee 100%);
+        color: #222;
+        line-height: 1.7;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #main-container h1 {
+        margin-bottom: 1.2em;
+        text-align: center;
+        letter-spacing: 1px;
+        font-size: 2.5rem;
+        color: #b22222;
+        margin-top: 0;
+      }
+
+      ul#sortable {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px 24px;
+        list-style-type: none;
+        margin: 0 0 1.5em 0;
+        padding: 0;
+        width: 100%;
+      }
+
+      #sortable li {
+        background: #f6f7fa;
+        border: 1.5px solid #d1d5db;
+        border-radius: 10px;
+        margin: 0;
+        padding: 14px 18px;
+        cursor: grab;
+        font-size: 1.5rem;
+        box-shadow: 0 2px 8px rgba(178, 34, 34, 0.04);
+        transition: background 0.2s, box-shadow 0.2s;
+        user-select: none;
+      }
+
+      #sortable li:active {
+        background: #ffeaea;
+        box-shadow: 0 4px 16px rgba(178, 34, 34, 0.08);
+      }
+
+      button {
+        margin-top: 20px;
+        font-size: 1.2rem;
+        background: #b22222;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 28px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(178, 34, 34, 0.08);
+        transition: background 0.2s;
+      }
+
+      button:hover {
+        background: #8b1818;
+      }
+
+      p#result {
+        font-size: 1.5rem;
+        text-align: center;
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+        min-height: 2em;
+      }
+
+      @media (max-width: 700px) {
+        #main-container {
+          padding: 18px 6vw;
+        }
+
+        ul#sortable {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main-container">
+      <h1>Ordne die W-Fragen bei einer Rettung nach richtiger Reihenfolge</h1>
+      <ul id="sortable"></ul>
+      <button onclick="checkOrder()">Überprüfen</button>
+      <p id="result"></p>
+    </div>
+
+    <script>
+      const items = [
+        { order: 3, text: "3. Wer ist beteiligt?" },
+        { order: 1, text: "1. Was ist passiert?" },
+        { order: 2, text: "2. Wo genau sind Sie?" },
+        { order: 5, text: "5. Warum ist die Situation gefährlich?" },
+        { order: 4, text: "4. Wann ist es passiert?" },
+        { order: 6, text: "6. Wie viele Verletzte gibt es?" },
+      ];
+
+      function shuffle(array) {
+        return array.sort(() => Math.random() - 0.5);
+      }
+
+      function renderItems() {
+        const shuffled = shuffle([...items]);
+        const list = document.getElementById("sortable");
+        list.innerHTML = "";
+
+        shuffled.forEach((item) => {
+          const li = document.createElement("li");
+          li.textContent = item.text;
+          li.dataset.order = item.order;
+          li.draggable = true;
+
+          // Maus-Events
+          li.addEventListener("dragstart", handleDragStart);
+          li.addEventListener("dragover", handleDragOver);
+          li.addEventListener("drop", handleDrop);
+
+          // Touch-Events
+          li.addEventListener("touchstart", handleTouchStart, {
+            passive: true,
+          });
+          li.addEventListener("touchmove", handleTouchMove, { passive: false });
+          li.addEventListener("touchend", handleTouchEnd);
+
+          list.appendChild(li);
+        });
+      }
+
+      let draggedItem = null;
+      let lastTouchX = 0;
+      let lastTouchY = 0;
+
+      function handleDragStart(e) {
+        draggedItem = this;
+
+        // Unsichtbares Ghost-Element setzen (verhindert "Hineinfliegen")
+        const img = new Image();
+        img.src =
+          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2NkYGBgAAAABAABJzQnCgAAAABJRU5ErkJggg==";
+        e.dataTransfer.setDragImage(img, 0, 0);
+      }
+
+      function handleDragOver(e) {
+        e.preventDefault();
+        const list = this.parentNode;
+        const draggedIndex = Array.from(list.children).indexOf(draggedItem);
+        const targetIndex = Array.from(list.children).indexOf(this);
+        if (draggedIndex < targetIndex) {
+          list.insertBefore(draggedItem, this.nextSibling);
+        } else {
+          list.insertBefore(draggedItem, this);
+        }
+      }
+
+      function handleDrop(e) {
+        e.preventDefault();
+      }
+
+      // Touch-Funktionalität
+      function handleTouchStart(e) {
+        if (e.touches.length === 1) {
+          draggedItem = e.currentTarget;
+          lastTouchX = e.touches[0].clientX;
+          lastTouchY = e.touches[0].clientY;
+          draggedItem.style.opacity = "0.5";
+        }
+      }
+
+      function handleTouchMove(e) {
+        if (!draggedItem || e.touches.length !== 1) return;
+        e.preventDefault();
+        const touch = e.touches[0];
+        const overElement = document.elementFromPoint(
+          touch.clientX,
+          touch.clientY
+        );
+        const list = draggedItem.parentNode;
+        const target = overElement?.closest("li");
+        if (target && target !== draggedItem && target.parentNode === list) {
+          const draggedIndex = Array.from(list.children).indexOf(draggedItem);
+          const targetIndex = Array.from(list.children).indexOf(target);
+          if (draggedIndex < targetIndex) {
+            list.insertBefore(draggedItem, target.nextSibling);
+          } else {
+            list.insertBefore(draggedItem, target);
+          }
+        }
+      }
+
+      function handleTouchEnd(e) {
+        if (draggedItem) {
+          draggedItem.style.opacity = "1";
+          draggedItem = null;
+        }
+      }
+
+      function checkOrder() {
+        const listItems = document.querySelectorAll("#sortable li");
+        const currentOrder = Array.from(listItems).map((li) =>
+          parseInt(li.dataset.order)
+        );
+        const sorted = [...currentOrder].sort((a, b) => a - b);
+        const isCorrect = currentOrder.every((val, idx) => val === sorted[idx]);
+        document.getElementById("result").textContent = isCorrect
+          ? "Richtige Reihenfolge!"
+          : "Falsche Reihenfolge. Versuche es nochmal.";
+      }
+
+      renderItems();
+    </script>
+  </body>
+</html>

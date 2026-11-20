@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Quizspiel</title>
+  <style>
+    /* Grundlegendes Styling für bessere Lesbarkeit */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+    }
+    .quiz-container {
+      max-width: 600px;
+      margin: auto;
+    }
+    .question {
+      margin-bottom: 1em;
+    }
+    .answers label {
+      display: block;
+      margin-bottom: 0.5em;
+    }
+    #submit-btn {
+      margin-top: 1em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Container für das Quiz -->
+<div class="quiz-container">
+  <h1>Quizspiel</h1>
+
+  <!-- Hier werden Fragen dynamisch eingefügt -->
+  <div id="quiz"></div>
+
+  <!-- Button zur Auswertung -->
+  <button id="submit-btn">Antwort bestätigen</button>
+
+  <!-- Hier wird das Ergebnis angezeigt -->
+  <p id="result"></p>
+</div>
+
+<script>
+  // Array mit allen Fragen und Antworten
+  const quizData = [
+    {
+      id: "q1", // ID zur Identifikation der Frage
+      question: "Was ist die Hauptstadt von Frankreich?",
+      answers: [
+        { id: "q1a", text: "Berlin", isCorrect: false },
+        { id: "q1b", text: "Madrid", isCorrect: false },
+        { id: "q1c", text: "Paris", isCorrect: true },
+        { id: "q1d", text: "Rom", isCorrect: false }
+      ]
+    },
+    {
+      id: "q2",
+      question: "Welches Element hat das chemische Symbol O?",
+      answers: [
+        { id: "q2a", text: "Osmium", isCorrect: false },
+        { id: "q2b", text: "Ozon", isCorrect: false },
+        { id: "q2c", text: "Sauerstoff", isCorrect: true },
+        { id: "q2d", text: "Gold", isCorrect: false }
+      ]
+    }
+  ];
+
+  // HTML-Elemente referenzieren
+  const quizContainer = document.getElementById("quiz");
+  const resultContainer = document.getElementById("result");
+  const submitButton = document.getElementById("submit-btn");
+
+  // Funktion zum Laden und Anzeigen der Fragen
+  function loadQuiz() {
+    quizContainer.innerHTML = ""; // Vorherige Inhalte löschen
+
+    // Jede Frage wird durchlaufen
+    quizData.forEach((q, index) => {
+      // Container für einzelne Frage
+      const questionDiv = document.createElement("div");
+      questionDiv.classList.add("question");
+
+      // Frage anzeigen
+      questionDiv.innerHTML = `<strong>${index + 1}. ${q.question}</strong>`;
+
+      // Container für Antworten
+      const answersDiv = document.createElement("div");
+      answersDiv.classList.add("answers");
+
+      // Jede Antwort als Radio-Button darstellen
+      q.answers.forEach(a => {
+        const label = document.createElement("label");
+        label.innerHTML = `
+          <input type="radio" name="${q.id}" value="${a.id}"> ${a.text}
+        `;
+        answersDiv.appendChild(label);
+      });
+
+      // Antworten an die Frage anhängen
+      questionDiv.appendChild(answersDiv);
+
+      // Frage in das Quiz einfügen
+      quizContainer.appendChild(questionDiv);
+    });
+  }
+
+  // Funktion zur Auswertung des Quiz
+  function evaluateQuiz() {
+    let score = 0; // Zähler für richtige Antworten
+
+    // Alle Fragen durchgehen
+    quizData.forEach(q => {
+      // Prüfen, ob eine Antwort ausgewählt wurde
+      const selected = document.querySelector(`input[name="${q.id}"]:checked`);
+      if (selected) {
+        // Gewählte Antwort finden
+        const answer = q.answers.find(a => a.id === selected.value);
+        if (answer && answer.isCorrect) {
+          score++; // Punkt hinzufügen, wenn korrekt
+        }
+      }
+    });
+
+    // Ergebnis anzeigen
+    resultContainer.textContent = `Du hast ${score} von ${quizData.length} Fragen richtig beantwortet.`;
+  }
+
+  // Button-Click-Event: Quiz auswerten
+  submitButton.addEventListener("click", evaluateQuiz);
+
+  // Beim Laden der Seite: Quiz anzeigen
+  loadQuiz();
+</script>
+
+</body>
+</html>

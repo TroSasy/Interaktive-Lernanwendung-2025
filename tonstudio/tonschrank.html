@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tonschrank</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #fff;
+      color: #000;
+      line-height: 1.6;
+    }
+
+    h2 {
+      color: #b22222;
+      font-size: 2rem;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: row;
+      gap: 40px;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .text {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .images {
+      flex-shrink: 0;
+      max-width: 60%; /* Bild darf bis zu 60% des Containers einnehmen */
+    }
+
+    .images img {
+      max-height: 90vh; /* bis zu 90% der Fensterhöhe */
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    p {
+      text-align: left;
+      font-size: 1.5rem;
+      margin: 1.5em 0;
+    }
+
+    @media (max-width: 800px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .images {
+        max-width: 100%;
+      }
+
+      .images img {
+        height: auto;
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>Tonschrank</h2>
+  <div class="container">
+    <div class="text">
+      <p>
+        Der Tonschrank ist ein wichtiger Bestandteil des Tonstudios, <br> der eine Vielzahl
+        von Audio-Equipment und Zubehör enthält. <br><br> Er dient als zentraler Ort für die
+        Aufbewahrung und Organisation von Mikrofonen, <br>Kabeln, Mischpulten und anderen
+        Geräten, die für die Tonaufnahme und -bearbeitung benötigt werden. <br><br> Der
+        Tonschrank ermöglicht es den Tontechnikern,<br> schnell auf benötigte Geräte zuzugreifen
+        und sorgt für eine effiziente Arbeitsumgebung.
+      </p>
+    </div>
+    <div class="images">
+      <img src="/003_webseite_html_in_html/003_webseite_html_in_html/tonstudio/Tonschrank.JPG" alt="Tonschrank im Studio" />
+    </div>
+  </div>
+</body>
+</html>
